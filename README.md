@@ -45,7 +45,7 @@ The same is true of [using vite](https://dev.to/alvarosaburido/vite-2-a-speed-co
 
 TypeScript:
 
-'''ts
+```ts
 interface IRepository<T> {
     Save(entity: T): void;
 
@@ -76,11 +76,11 @@ class PersonRepository implements IRepository<Person> {
         repository.Save(person);
     }
 }
-'''
+```
 
 C#
 
-'''csharp
+```csharp
 interface IRepository<T> {
     void Save(T entity);
 
@@ -111,7 +111,7 @@ class PersonRepository : IRepository<Person> {
         repository.Save(person);
     }
 }
-'''
+```
 
 ### Productivity with .NET MongoDB Driver LINQ
 
