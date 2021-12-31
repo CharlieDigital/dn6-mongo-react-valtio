@@ -2,7 +2,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // [CC] Add custom logging
-builder.Host.UseSerilog((context, config) => {
+builder.Host.UseSerilog((context, config) =>
+{
     config
         .WriteTo.Console()
         .WriteTo.File("logs/log.txt");
@@ -30,7 +31,8 @@ builder.Services.AddScoped<IDataServices, DataServices>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(config => {
+builder.Services.AddSwaggerGen(config =>
+{
     // This pulls the code comments into the Swagger docs.
     // See: https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments
     string filePath = Path.Combine(System.AppContext.BaseDirectory, "Api.xml");
@@ -38,6 +40,14 @@ builder.Services.AddSwaggerGen(config => {
 });
 
 var app = builder.Build();
+
+// [CC] In the container environment, we want to run this on 8080 for GCR
+// This means that we will need to add the environment variable in the
+// Dockerfile.
+if(app.Environment.IsEnvironment("container"))
+{
+    app.Urls.Add("http://0.0.0.0:8080"); // Supoorts Google Cloud Run.
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -47,7 +57,8 @@ if (app.Environment.IsDevelopment())
 }
 
 // [CC] We need this to call our API from the static front-end
-app.UseCors(options => {
+app.UseCors(options =>
+{
     options.AllowAnyHeader();
     options.AllowAnyMethod();
     options.AllowAnyOrigin();

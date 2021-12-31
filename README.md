@@ -44,7 +44,7 @@ While Node, Go, and Rust show better cold-start performance, this is generally a
 
 The same is true of [using vite](https://dev.to/alvarosaburido/vite-2-a-speed-comparison-in-vue-1f5j).  Vite uses esbuild underneath [and its performance puts webpack out to pasture (at least for dev builds!)](https://developpaper.com/ask-if-you-dont-understand-where-is-esbuild/).
 
-### Easy to Transition
+### Easy(-ish) to Transition
 
 [Both C# and TypeScript were designed by Anders Hejlsberg of Microsoft](https://en.wikipedia.org/wiki/Anders_Hejlsberg).  And while TypeScript offers a wide degree of freedom with how one uses it, developers familiar with TypeScript's features like generics, interfaces, and inheritance will have a very short ramp to C# compared to Go or Rust.
 
@@ -118,6 +118,10 @@ class PersonRepository : IRepository<Person> {
 }
 ```
 
+While it's true that JavaScript and TypeScript have a spectrum of styles from very functional to semi-object-oriented, C#; JavaScript; and TypeScript do share a lot of syntactic and stylistic similarities as well as general functionality because the .NET runtime has come to support functional programming languages (F#) over the years.
+
+The TypeScript example above could obviously be far more functional in style as well.  But if you are already planning on adopting stronger typing on the server, it seems like a good opportunity to simply step up to C# instead.
+
 ### Productivity with .NET MongoDB Driver LINQ
 
 At scale, teams *need* to have a strongly typed data model in the API.  Starting from a loosely/untyped data model in the early stages of a project can be critical for speed, but as the team grows, as customers seek APIs for integration, as the complexity of the domain space increases, the lack of a strongly-typed data model at the API is a bottleneck for growth and leads to slapdash code, high duplication, and high rates of defects that eventually start to hamper growth.
@@ -172,7 +176,7 @@ The project includes the Swagger middleware for .NET that produces schema docume
 
 ![Swagger Schema](static/swagger-ui.png)
 
-Every time the .NET project is built, it generates a new OpenAPI schema output which can be used to generate a client for the React front-end. The TypeScript front-end even includes the comments fro the server side.
+Every time the .NET project is built, it generates a new OpenAPI schema output which can be used to generate a client for the React front-end. The TypeScript front-end even includes the comments from the server side.
 
 ```ts
 // web/src/services/models/Company.ts
@@ -296,6 +300,22 @@ dotnet sln add tests
 ```
 
 Finally, point OmniSharp to the `.sln` file by typing `CTRL+SHIFT+P` and then `OmniSharp: Select Project`.
+
+## Logging
+
+[Serilog](https://serilog.net/) has been injected in `Program.cs`.
+
+The reason to consider Serilog is that it provides [many different sinks](https://github.com/serilog/serilog/wiki/Provided-Sinks) which can be written to simultaneously for comprehensive logging.
+
+The [structured log output](https://github.com/serilog/serilog/wiki/Structured-Data) allows better data representation in the log output.
+
+## Real Time
+
+To add real time interactions to this, the easiest path is to incorporate [SignalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/hubs?view=aspnetcore-6.0).
+
+In production, you're better off using Azure SignalR as this provides a low-cost, highly scalable web-sockets as a service capability.
+
+Use the local hub for development and switch to Azure SignalR in production.
 
 ## Resources
 
