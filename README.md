@@ -114,9 +114,9 @@ class PersonRepository : IRepository<Person> {
 
 ### Productivity with .NET MongoDB Driver LINQ
 
-At scale, teams *need* to have a strongly typed data model in the API.  Starting from a loosely/untyped data model in the early stages of a project can be critical for speed, but as the team grows, as customers seek APIs for integration, as the complexity of the domain space increases, the lack of a strongly-typed data model at the API is a bottleneck for growth and leads to slapdash code, high duplication, and high rates of error.
+At scale, teams *need* to have a strongly typed data model in the API.  Starting from a loosely/untyped data model in the early stages of a project can be critical for speed, but as the team grows, as customers seek APIs for integration, as the complexity of the domain space increases, the lack of a strongly-typed data model at the API is a bottleneck for growth and leads to slapdash code, high duplication, and high rates of defects that eventually start to hamper growth.
 
-Whether TypeScript or C# or Go, having a typed data model and well-defined API is a long term necessity for any project that needs to scale.
+Whether TypeScript or C# or Go, having a typed data model and well-defined API is a long term necessity for any project that needs to scale as the number of individuals working in the codebase increases and as downstream consumers (other teams, customers, partners) increases.
 
 If you are using MongoDB, the LINQ implementation in the .NET MongoDB driver is a huge productivity boost and provides a strongly typed query mechanism (given an application layer data model).
 
@@ -250,3 +250,12 @@ dotnet sln add tests
 ```
 
 Finally, point OmniSharp to the `.sln` file by typing `CTRL+SHIFT+P` and then `OmniSharp: Select Project`.
+
+## Resources
+
+- [.NET Core Web API MongoDB Tutorial](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code)
+- [.NET Core Web API Attribute Routing](https://docs.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/attribute-routing-in-web-api-2)
+- [.NET Core Model Binding](https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-6.0#sources)
+- [MongoDB .NET Driver Documentation](http://mongodb.github.io/mongo-csharp-driver/)
+  - [LINQ](https://mongodb.github.io/mongo-csharp-driver/2.14/reference/driver/crud/linq/)
+  - [Advanced Class Mapping](http://mongodb.github.io/mongo-csharp-driver/2.10/reference/bson/mapping/)
