@@ -120,7 +120,30 @@ class PersonRepository : IRepository<Person> {
 
 While it's true that JavaScript and TypeScript have a spectrum of styles from very functional to semi-object-oriented, C#; JavaScript; and TypeScript do share a lot of syntactic and stylistic similarities as well as general functionality because the .NET runtime has come to support functional programming languages (F#) over the years.
 
-The TypeScript example above could obviously be far more functional in style as well.  But if you are already planning on adopting stronger typing on the server, it seems like a good opportunity to simply step up to C# instead.
+The TypeScript example above could obviously be far more functional in style as well:
+
+```ts
+interface IRepository<T> {
+    save: (entity: T) => void,
+    items: () => T[]
+}
+
+interface Person {
+    firstName: string,
+    lastName: string
+}
+
+const createPersonRepository = (): IRepository<Person> => {
+    const persons: Person[] = [];
+    return {
+        items: () => persons.slice(),
+        save: (p: Person) => { persons.push(p); }
+    };
+};
+```
+
+
+But if you are already planning on adopting stronger typing on the server, it seems like a good opportunity to simply step up to C# instead.
 
 ### Productivity with .NET MongoDB Driver LINQ
 
