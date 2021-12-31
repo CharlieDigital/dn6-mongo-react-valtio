@@ -1,15 +1,17 @@
-
-
 namespace Api.Domain.Model;
 
 /// <summary>
 /// Models a Company entity.
 /// </summary>
-public class Company
+public class Company : MongoEntityBase
 {
-    [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-    public Guid Id;
-    public string? Name;
-    public string? Address;
-    public string? WebUrl;
+    /// <summary>
+    /// The address of the company.
+    /// </summary>
+    public string? Address { get; set; }
+
+    /// <summary>
+    /// The URL of the website for the given company.
+    /// </summary>
+    public string? WebUrl { get; set; }
 }

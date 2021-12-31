@@ -1,5 +1,14 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Initialize Mongo: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code
+builder.Services.Configure<MongoDbConnectionSettings>(
+    builder.Configuration.GetSection(nameof(MongoDbConnectionSettings))
+);
+builder.Services.AddSingleton<MongoDbContext>();
+
+// Initialize the data services.
+builder.Services.AddScoped<IDataServices, DataServices>();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -23,6 +32,7 @@ app.UseCors(options => {
     options.AllowAnyOrigin();
 });
 
+// Turn off for development
 // app.UseHttpsRedirection();
 
 app.UseAuthorization();
