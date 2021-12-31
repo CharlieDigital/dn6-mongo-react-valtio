@@ -164,6 +164,47 @@ var query = collection.AsQueryable()
 
 No guessing what the schema is in the database.
 
+### Productivity with OpenAPI TypeScript Client Generation
+
+Like my earlier project [dotnet6-openapi](https://github.com/CharlieDigital/dotnet6-openapi), this project demonstrates generation of front-end TypeScript clients using the OpenAPI specification.
+
+The project includes the Swagger middleware for .NET that produces schema documentation:
+
+![Swagger Schema](static/swagger-ui.png)
+
+Every time the .NET project is built, it generates a new OpenAPI schema output which can be used to generate a client for the React front-end. The TypeScript front-end even includes the comments fro the server side.
+
+```ts
+// web/src/services/models/Company.ts
+
+/**
+ * Models a Company entity.
+ */
+export type Company = {
+    id?: string | null;
+    label?: string | null;
+    /**
+     * The address of the company.
+     */
+    address?: string | null;
+    /**
+     * The URL of the website for the given company.
+     */
+    webUrl?: string | null;
+}
+```
+
+This provides a contract-based development experience that increases productivity by taking the guesswork out of calling APIs.
+
+Once the schema is generated, running:
+
+```
+cd web
+yarn run codegen
+```
+
+Will re-generate the client TypeScript bindings.  Any schema changes will cause build time errors.
+
 ### "Magically Simple" React State with Valtio
 
 Daishi Kato, author of valtio, [describes the decision tree for selecting it as "magically simple"](https://twitter.com/dai_shi/status/1348257768130560008?s=20).
