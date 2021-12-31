@@ -191,7 +191,7 @@ cd pi
 dotnet watch
 ```
 
-This latter one will watch for changes and automatically rebuild the solution.
+This latter one will watch for changes and automatically rebuild the solution.  It will also launch the UI for the swagger endpoint at: `https://localhost:7293/swagger/index.html`.
 
 ### Running the Front-End
 
@@ -203,6 +203,8 @@ yarn                # Pull the dependencies
 yarn run codegen    # Generate the client code; will fail if server is already running
 yarn run dev        # Starts the server.
 ```
+
+The UI is accessible at `http://localhost:3000` by default.
 
 ### Testing the API
 
@@ -218,10 +220,7 @@ curl --location --request DELETE 'http://localhost:5009/api/company/delete/61cf5
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/json")
 
-$body = "{
-`n    `"Id`": `"`",
-`n    `"Label`": `"Test`"
-`n}"
+$body = "{ `"Id`": `"`", `"Label`": `"Test`" }"
 
 $response = Invoke-RestMethod 'http://localhost:5009/api/company/add' -Method 'POST' -Headers $headers -Body $body
 $response = Invoke-RestMethod 'http://localhost:5009/api/company/61cf5f0b414b44c2eb8c6f8c' -Method 'GET' -Headers $headers
