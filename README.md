@@ -40,6 +40,8 @@ Multiple benchmarks show that .NET Core is now in the same performance tier as G
 
 [.NET 6 brings additional performance improvements](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-6/) which will continue to push the boundaries.
 
+While Node, Go, and Rust show better cold-start performance, this is generally a small penalty that is only paid once on the initial startup of a container instance.  It can be optimized for [by using pre-JIT techniques](https://medium.com/@tainguyenbui/optimizing-c-aws-lambda-with-custom-runtime-2f1f69f0431a).  [.NET 7 addresses this with NativeAOT](https://github.com/dotnet/runtime/issues/61231).
+
 The same is true of [using vite](https://dev.to/alvarosaburido/vite-2-a-speed-comparison-in-vue-1f5j).  Vite uses esbuild underneath [and its performance puts webpack out to pasture (at least for dev builds!)](https://developpaper.com/ask-if-you-dont-understand-where-is-esbuild/).
 
 ### Easy to Transition
