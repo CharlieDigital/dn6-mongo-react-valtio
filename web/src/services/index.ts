@@ -5,6 +5,6 @@ export { ApiError } from './core/ApiError';
 export { CancelablePromise } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 
-export type { WeatherForecast } from './models/WeatherForecast';
+export type { Company } from './models/Company';
 
-export { WeatherForecastService } from './services/WeatherForecastService';
+export { CompanyService } from './services/CompanyService';

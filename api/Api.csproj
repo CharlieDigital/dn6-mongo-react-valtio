@@ -4,6 +4,10 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <!-- Generate XML documentation for Swagger docs -->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <!-- Don't warn on missing comments -->
+        <NoWarn>1591,1572,1573</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

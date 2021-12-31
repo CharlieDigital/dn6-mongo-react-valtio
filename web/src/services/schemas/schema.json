@@ -10,7 +10,10 @@
         "tags": [
           "Company"
         ],
+        "summary": "Adds a new company to the database.",
+        "operationId": "AddCompany",
         "requestBody": {
+          "description": "The company instance to add.",
           "content": {
             "application/json": {
               "schema": {
@@ -41,6 +44,8 @@
         "tags": [
           "Company"
         ],
+        "summary": "Deletes a Company given an ID.",
+        "operationId": "DeleteCompany",
         "parameters": [
           {
             "name": "id",
@@ -63,10 +68,13 @@
         "tags": [
           "Company"
         ],
+        "summary": "Gets a Company by ID",
+        "operationId": "GetCompany",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the company to retrieve.",
             "required": true,
             "schema": {
               "type": "string"
@@ -96,14 +104,17 @@
           },
           "address": {
             "type": "string",
+            "description": "The address of the company.",
             "nullable": true
           },
           "webUrl": {
             "type": "string",
+            "description": "The URL of the website for the given company.",
             "nullable": true
           }
         },
-        "additionalProperties": false
+        "additionalProperties": false,
+        "description": "Models a Company entity."
       }
     }
   }

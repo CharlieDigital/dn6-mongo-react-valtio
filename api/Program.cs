@@ -11,6 +11,11 @@ builder.Host.UseSerilog((context, config) => {
     // See the docs here: https://github.com/serilog/serilog/wiki
 });
 
+// [CC] Add SignalR; see: https://docs.microsoft.com/en-us/aspnet/core/signalr/hubs?view=aspnetcore-6.0
+// In production, consider using Azure SignalR services instead so that you don't have to manage
+// this infrastructure.
+// builder.Services.AddSignalR();
+
 // [CC] Initialize Mongo: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code
 builder.Services.Configure<MongoDbConnectionSettings>(
     builder.Configuration.GetSection(nameof(MongoDbConnectionSettings))
@@ -25,7 +30,12 @@ builder.Services.AddScoped<IDataServices, DataServices>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config => {
+    // This pulls the code comments into the Swagger docs.
+    // See: https://github.com/domaindrivendev/Swashbuckle.AspNetCore#include-descriptions-from-xml-comments
+    string filePath = Path.Combine(System.AppContext.BaseDirectory, "Api.xml");
+    config.IncludeXmlComments(filePath);
+});
 
 var app = builder.Build();
 
