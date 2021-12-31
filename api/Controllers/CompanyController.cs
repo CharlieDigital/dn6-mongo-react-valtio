@@ -31,7 +31,7 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes a company given an ID.
+    /// Deletes a Company given an ID.
     /// </summary>
     /// <param name="company">The company instance to add.</param>
     [Route("/api/company/delete/{id}")]
@@ -43,6 +43,11 @@ public class CompanyController : ControllerBase
         return new OkObjectResult(result);
     }
 
+    /// <summary>
+    /// Gets a Company by ID
+    /// </summary>
+    /// <param name="id">The ID of the company to retrieve.</param>
+    /// <returns>The Company instance that matches the ID.</returns>
     [Route("/api/company/{id}")]
     [HttpGet]
     public async Task<IActionResult> GetCompany(string id) {

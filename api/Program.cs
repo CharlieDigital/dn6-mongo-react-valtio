@@ -1,12 +1,23 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Initialize Mongo: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code
+// [CC] Add custom logging
+builder.Host.UseSerilog((context, config) => {
+    config
+        .WriteTo.Console()
+        .WriteTo.File("logs/log.txt");
+    // Add other targets/sinks here.
+    // Serilog has a variety of sinks: https://github.com/serilog/serilog/wiki/Provided-Sinks
+    // See the docs here: https://github.com/serilog/serilog/wiki
+});
+
+// [CC] Initialize Mongo: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code
 builder.Services.Configure<MongoDbConnectionSettings>(
     builder.Configuration.GetSection(nameof(MongoDbConnectionSettings))
 );
 builder.Services.AddSingleton<MongoDbContext>();
 
-// Initialize the data services.
+// [CC] Initialize the data services.
 builder.Services.AddScoped<IDataServices, DataServices>();
 
 // Add services to the container.
@@ -25,14 +36,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// We need this to call our API from the static front-end
+// [CC] We need this to call our API from the static front-end
 app.UseCors(options => {
     options.AllowAnyHeader();
     options.AllowAnyMethod();
     options.AllowAnyOrigin();
 });
 
-// Turn off for development
+// [CC] Turn off for development
 // app.UseHttpsRedirection();
 
 app.UseAuthorization();

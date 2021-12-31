@@ -6,6 +6,8 @@ global using MongoDB.Bson;
 global using MongoDB.Bson.Serialization.Attributes;
 global using MongoDB.Bson.Serialization.IdGenerators;
 
+global using Serilog;
+
 global using Api.Domain.Core;
 global using Api.Domain.Model;
 global using Api.DataAccess.Core;
