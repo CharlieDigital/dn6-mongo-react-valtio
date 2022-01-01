@@ -11,4 +11,9 @@ public interface IDataServices
     /// Repository for accessing Company instances.
     /// </summary>
     public CompanyRepository Companies { get; }
+
+    /// <summary>
+    /// Repository for accessing Employee instances.
+    /// </summary>
+    public EmployeeRepository Employees { get; }
 }

@@ -3,6 +3,48 @@ info:
   title: 'Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'
   version: '1.0'
 paths:
+  '/api/company/list/{start}/{pageSize}':
+    get:
+      tags:
+        - Company
+      summary: Gets the list of companies matching a specific page sorted by the title.
+      operationId: GetAllCompanies
+      parameters:
+        - name: start
+          in: path
+          description: The starting index of companies to retrieve.  Optional; 0 if not specified.
+          required: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: pageSize
+          in: path
+          description: The number of entries to retrieve.  Optional; 25 if not specified.
+          required: true
+          schema:
+            type: integer
+            format: int32
+            default: 25
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
   /api/company/add:
     post:
       tags:
@@ -24,6 +66,16 @@ paths:
       responses:
         '200':
           description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Company'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Company'
   '/api/company/delete/{id}':
     delete:
       tags:
@@ -39,7 +91,17 @@ paths:
       responses:
         '200':
           description: Success
-  '/api/company/{id}':
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+  '/api/company/{id}/{full}':
     get:
       tags:
         - Company
@@ -52,9 +114,156 @@ paths:
           required: true
           schema:
             type: string
+        - name: full
+          in: path
+          description: 'When specified, returns the rich object'
+          required: true
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
           description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Company'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+  /api/employee/add:
+    post:
+      tags:
+        - Employee
+      summary: "Adds a new Employee to the database.  Set the ID to the empty string \"\"\r\nand a new ID will be assigned automatically.  The returned entity will\r\nhave the new ID."
+      operationId: AddEmployee
+      requestBody:
+        description: The Employee instance to add.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Employee'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+  '/api/employee/delete/{id}':
+    delete:
+      tags:
+        - Employee
+      summary: Deletes a Employee given an ID.
+      operationId: DeleteEmployee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+  '/api/employee/{id}':
+    get:
+      tags:
+        - Employee
+      summary: Gets a Employee by ID
+      operationId: GetEmployee
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the Employee to retrieve.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Employee'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+  '/api/employee/company/{companyId}/{start}/{pageSize}':
+    get:
+      tags:
+        - Employee
+      summary: Gets the list of Employees by the company ID.
+      operationId: GetByCompany
+      parameters:
+        - name: companyId
+          in: path
+          description: The ID of the company to retrieve employees for.
+          required: true
+          schema:
+            type: string
+        - name: start
+          in: path
+          description: The starting index of companies to retrieve.
+          required: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: pageSize
+          in: path
+          description: The number of companies to retrieve.
+          required: true
+          schema:
+            type: integer
+            format: int32
+            default: 25
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
 components:
   schemas:
     Company:
@@ -76,5 +285,62 @@ components:
           type: string
           description: The URL of the website for the given company.
           nullable: true
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+          description: The list of Employees associated with this Company.
+          nullable: true
       additionalProperties: false
       description: Models a Company entity.
+    DeleteResult:
+      type: object
+      properties:
+        deletedCount:
+          type: integer
+          format: int64
+          readOnly: true
+        isAcknowledged:
+          type: boolean
+          readOnly: true
+      additionalProperties: false
+    Employee:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the entity in the MongoDB
+          nullable: true
+        label:
+          type: string
+          description: The name associated with the entity in the MongoDB
+          nullable: true
+        firstName:
+          type: string
+          description: The first name of the employee.
+          nullable: true
+        lastName:
+          type: string
+          description: The last name of the employee.
+          nullable: true
+        company:
+          $ref: '#/components/schemas/EntityRef'
+      additionalProperties: false
+      description: Models an employee.
+    EntityRef:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the entity in the MongoDB
+          nullable: true
+        label:
+          type: string
+          description: The name associated with the entity in the MongoDB
+          nullable: true
+        collection:
+          type: string
+          description: The collection that the entity exists in.
+          nullable: true
+      additionalProperties: false
+      description: "Represents an entity reference from one entity to another.  It inherits\r\nthe base properties of ID and Label from the base entities which allows\r\nfor efficient display of the relationship in the UI."

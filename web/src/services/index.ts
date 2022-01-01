@@ -6,5 +6,9 @@ export { CancelablePromise } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 
 export type { Company } from './models/Company';
+export type { DeleteResult } from './models/DeleteResult';
+export type { Employee } from './models/Employee';
+export type { EntityRef } from './models/EntityRef';
 
 export { CompanyService } from './services/CompanyService';
+export { EmployeeService } from './services/EmployeeService';

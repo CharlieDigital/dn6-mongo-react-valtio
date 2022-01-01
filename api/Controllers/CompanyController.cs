@@ -1,4 +1,3 @@
-
 namespace Api.Controllers;
 
 /// <summary>
@@ -17,17 +16,31 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
+    /// Gets the list of companies matching a specific page sorted by the title.
+    /// </summary>
+    /// <param name="start">The starting index of companies to retrieve.  Optional; 0 if not specified.</param>
+    /// <param name="pageSize">The number of entries to retrieve.  Optional; 25 if not specified.</param>
+    /// <returns>The companies starting from a given index and page size.</returns>
+    [HttpGet("/api/company/list/{start:int?}/{pageSize:int?}", Name = nameof(GetAllCompanies))]
+    public IEnumerable<Company> GetAllCompanies(int start = 0, int pageSize = 25)
+    {
+        _logger.LogInformation($"Getting companies from {start} to {start + pageSize}...");
+        IEnumerable<Company> result = this._dataServices.Companies.GetList(start, pageSize);
+        return result;
+    }
+
+    /// <summary>
     /// Adds a new company to the database.  Set the ID to the empty string ""
     /// and a new ID will be assigned automatically.  The returned entity will
     /// have the new ID.
     /// </summary>
     /// <param name="company">The company instance to add.</param>
     [HttpPost("/api/company/add", Name = nameof(AddCompany))]
-    public async Task<IActionResult> AddCompany([FromBody] Company company)
+    public async Task<Company> AddCompany([FromBody] Company company)
     {
         _logger.LogInformation("Adding a new company...");
         Company result = await this._dataServices.Companies.AddAsync(company);
-        return new OkObjectResult(result);
+        return result;
     }
 
     /// <summary>
@@ -35,23 +48,28 @@ public class CompanyController : ControllerBase
     /// </summary>
     /// <param name="company">The company instance to add.</param>
     [HttpDelete("/api/company/delete/{id}", Name = nameof(DeleteCompany))]
-    public async Task<IActionResult> DeleteCompany(string id)
+    public async Task<DeleteResult> DeleteCompany(string id)
     {
         _logger.LogInformation($"Deleting company with ID {id}");
         DeleteResult result = await this._dataServices.Companies.DeleteAsync(id);
-        return new OkObjectResult(result);
+        return result;
     }
 
     /// <summary>
     /// Gets a Company by ID
     /// </summary>
     /// <param name="id">The ID of the company to retrieve.</param>
+    /// <param name="full">When specified, returns the rich object</param>
     /// <returns>The Company instance that matches the ID.</returns>
-    [HttpGet("/api/company/{id}", Name = nameof(GetCompany))]
-    public async Task<IActionResult> GetCompany(string id)
+    [HttpGet("/api/company/{id}/{full?}", Name = nameof(GetCompany))]
+    public async Task<Company> GetCompany(string id, bool full = false)
     {
-        _logger.LogInformation($"Getting company with ID: {id}");
-        Company company = await this._dataServices.Companies.GetAsync(id);
-        return new OkObjectResult(company);
+        _logger.LogInformation($"Getting company with ID: {id} ({full})");
+
+        Company? company = full
+            ? this._dataServices.Companies.GetFullEntity(id)
+            : await this._dataServices.Companies.GetAsync(id);
+
+        return company;
     }
 }

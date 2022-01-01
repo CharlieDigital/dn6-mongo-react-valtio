@@ -9,6 +9,11 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <!-- Don't warn on missing comments -->
         <NoWarn>1591,1572,1573</NoWarn>
+        <!-- Use LangVersion preview to get access to generic attributes -->
+        <!--
+            https://stackoverflow.com/a/70370475/116051
+            <LangVersion>preview</LangVersion>
+        -->
     </PropertyGroup>
 
     <ItemGroup>

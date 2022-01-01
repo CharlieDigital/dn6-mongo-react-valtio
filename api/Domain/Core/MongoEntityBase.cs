@@ -5,23 +5,13 @@ namespace Api.Domain.Core;
 /// </summary>
 public abstract class MongoEntityBase : IMongoEntity
 {
-    private string _id = null!;
-    private string _label = null!;
-
     /// <summary>
     /// The ID of the entity in the MongoDB
     /// </summary>
-    public string Id
-    {
-        get { return this._id; }
-        set { this._id = value; }
-    }
+    public string Id { get; set; } = null!;
 
     /// <summary>
     /// The name associated with the entity in the MongoDB
     /// </summary>
-    public string Label {
-        get { return this._label; }
-        set { this._label = value; }
-    }
+    public string Label { get; set; } = null!;
 }

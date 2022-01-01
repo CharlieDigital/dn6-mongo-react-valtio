@@ -1,34 +1,7 @@
 import { proxy } from "valtio";
-import { CompanyService } from "../services";
+import { CompanyService, Employee, EmployeeService } from "../services";
 import { Company } from "../services/models/Company";
-
-const companyNames: string[] = [
-    "Cummins",
-    "Williams",
-    "VF",
-    "Universal Health Services",
-    "Fiserv",
-    "PulteGroup",
-    "NGL Energy Partners",
-    "PNC Financial Services",
-    "Coca-Cola",
-    "Cheniere Energy",
-    "Eastman Chemical",
-    "JetBlue Airways",
-    "Yum Brands",
-    "Interpublic Group",
-    "Northrop Grumman",
-    "National Oilwell Varco",
-    "Peabody Energy",
-    "Westlake Chemical",
-    "Reinsurance Group of America",
-    "Anadarko Petroleum",
-    "Penske Automotive Group",
-    "PPG Industries",
-    "Abbott Laboratories",
-    "Hertz Global Holdings",
-    "Eversource Energy"
-]
+import { companyNames, firstNames, lastNames } from "./RandomData"
 
 class AppState
 {
@@ -62,7 +35,7 @@ class AppState
                     address: null,
                     webUrl: null
                 }
-            }) as Company;
+            });
 
         appState.companies.push(response);
     }
@@ -81,6 +54,58 @@ class AppState
         const index = appState.companies.findIndex(c => c.id === company.id);
 
         appState.companies.splice(index, 1);
+    }
+
+    /**
+     * Performs the load of Companies from the back end.
+     */
+    public async loadCompanies()
+    {
+        let response = await CompanyService.getAllCompanies({ start: 0 });
+
+        appState.companies.splice(0, 0, ...response);
+    }
+
+    /**
+     * Adds a randomly generated Employee to a Company
+     * @param company The Company to add the Employee to.
+     */
+    public async addEmployeeTo(company: Company)
+    {
+        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+
+        const employee: Employee = {
+            id: '',
+            label: `${lastName}, ${firstName}`,
+            firstName: firstName,
+            lastName: lastName,
+            company: {
+                id: company.id,
+                label: company.label,
+                collection: 'Company'
+            }
+        };
+
+        const newEmployee = await EmployeeService.addEmployee({ requestBody: employee });
+
+        appState.companies.find(c => c.id === company.id)
+            ?.employees?.push(newEmployee);
+    }
+
+    /**
+     * Loads the Employees for a given Company
+     * @param company The Company to load the Employees for.
+     */
+    public async loadEmployeesFor(company: Company)
+    {
+        let response = await EmployeeService.getByCompany({
+            id: company.id || '',
+            start: 0
+        })
+
+        appState.companies.find(c => c.id === company.id)
+            ?.employees?.splice(0, 0, ...response);
     }
 }
 

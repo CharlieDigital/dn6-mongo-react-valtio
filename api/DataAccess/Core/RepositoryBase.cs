@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 namespace Api.DataAccess.Core;
 
 /// <summary>
@@ -11,6 +12,16 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
 
     private readonly IMongoCollection<T> _collection;
 
+    protected IMongoCollection<T> Collection
+    {
+        get { return this._collection; }
+    }
+
+    protected MongoDbContext Context
+    {
+        get { return this._context; }
+    }
+
     /// <summary>
     /// Protected constructor which initializes the repository with the injected MongoDbContext.
     /// </summary>
@@ -18,7 +29,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     protected RepositoryBase(MongoDbContext context)
     {
         this._context = context;
-        this._collection = context.Database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
+        this._collection = context.Database.GetCollection<T>(typeof(T).Name);
     }
 
     /// <summary>
@@ -26,7 +37,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// a new one will be generated and assigned to the entity.
     /// </summary>
     /// <param name="entity">The entity to add to the database.</param>
-    public async Task<T> AddAsync(T entity)
+    public async virtual Task<T> AddAsync(T entity)
     {
         if (string.IsNullOrEmpty(entity.Id))
         {
@@ -45,7 +56,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// </summary>
     /// <param name="id">The ID of the entity to delete.</param>
     /// <returns>The result of the deletion operation.</returns>
-    public async Task<DeleteResult> DeleteAsync(string id)
+    public async virtual Task<DeleteResult> DeleteAsync(string id)
     {
         return await this._collection.DeleteOneAsync<T>(e => e.Id == id);
     }
@@ -55,8 +66,35 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// </summary>
     /// <param name="id">The ID of the entity to retrieve.</param>
     /// <returns>The instance of the entity that matches the ID.</returns>
-    public async Task<T> GetAsync(string id)
+    public async virtual Task<T> GetAsync(string id)
     {
         return (await this._collection.FindAsync<T>(e => e.Id == id)).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Gets a listing of the entities sorted on the title starting from the start index
+    /// and retriving up to pageSize instances.
+    /// </summary>
+    /// <param name="start">The starting index of companies to retrieve.</param>
+    /// <param name="pageSize">The number of entries to retrieve.</param>
+    /// <param name="whereClause">An optional where clause to apply.</param>
+    /// <returns>The specified number of entries starting from the specified start index sorted by title.</returns>
+    public virtual IEnumerable<T> GetList(int start, int pageSize, Expression<Func<T, bool>>? whereClause = null)
+    {
+        var query = this._collection.AsQueryable();
+
+        if (whereClause != null)
+        {
+            return query
+                .Where(whereClause)
+                .OrderBy(e => e.Label)
+                .Skip(start)
+                .Take(pageSize);;
+        }
+
+        return query
+            .OrderBy(e => e.Label)
+            .Skip(start)
+            .Take(pageSize);
     }
 }

@@ -6,7 +6,7 @@ namespace Api.Domain.Core;
 public interface IMongoEntity
 {
     /// <summary>
-    /// The ID of the entity in the MongoDB
+    /// The ID of the entity in the MongoDB using BSON ID format.
     /// </summary>
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
