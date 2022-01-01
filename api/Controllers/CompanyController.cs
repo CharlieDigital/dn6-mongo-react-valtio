@@ -5,7 +5,6 @@ namespace Api.Controllers;
 /// API Contoller class for Company entities.
 /// </summary>
 [ApiController]
-[Route("[controller]")]
 public class CompanyController : ControllerBase
 {
     private readonly IDataServices _dataServices;
@@ -18,7 +17,9 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// Adds a new company to the database.
+    /// Adds a new company to the database.  Set the ID to the empty string ""
+    /// and a new ID will be assigned automatically.  The returned entity will
+    /// have the new ID.
     /// </summary>
     /// <param name="company">The company instance to add.</param>
     [HttpPost("/api/company/add", Name = nameof(AddCompany))]
@@ -47,7 +48,8 @@ public class CompanyController : ControllerBase
     /// <param name="id">The ID of the company to retrieve.</param>
     /// <returns>The Company instance that matches the ID.</returns>
     [HttpGet("/api/company/{id}", Name = nameof(GetCompany))]
-    public async Task<IActionResult> GetCompany(string id) {
+    public async Task<IActionResult> GetCompany(string id)
+    {
         _logger.LogInformation($"Getting company with ID: {id}");
         Company company = await this._dataServices.Companies.GetAsync(id);
         return new OkObjectResult(company);

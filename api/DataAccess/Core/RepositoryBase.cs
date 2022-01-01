@@ -14,27 +14,29 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <summary>
     /// Protected constructor which initializes the repository with the injected MongoDbContext.
     /// </summary>
-    /// <param name="context">The MongoDbContect with the handle to the client.</param>
+    /// <param name="context">The MongoDbContext with the handle to the client.</param>
     protected RepositoryBase(MongoDbContext context)
     {
         this._context = context;
-        this._collection = context.Database.GetCollection<T>(typeof(T).Name);
+        this._collection = context.Database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
     }
 
     /// <summary>
-    /// Adds an instance of a given entity into the database.
+    /// Adds an instance of a given entity into the database.  If the entity does not have an ID,
+    /// a new one will be generated and assigned to the entity.
     /// </summary>
     /// <param name="entity">The entity to add to the database.</param>
     public async Task<T> AddAsync(T entity)
     {
         if (string.IsNullOrEmpty(entity.Id))
         {
-            // Assign an ID if the valaue isn't set.
+            // Assign an ID if the value isn't set.
             entity.Id = ObjectId.GenerateNewId().ToString();
         }
 
         await this._collection.InsertOneAsync(entity);
 
+        // Return the entity so that it receives the ID.
         return entity;
     }
 
@@ -55,6 +57,6 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <returns>The instance of the entity that matches the ID.</returns>
     public async Task<T> GetAsync(string id)
     {
-        return await (await this._collection.FindAsync<T>(e => e.Id == id)).FirstOrDefaultAsync();
+        return (await this._collection.FindAsync<T>(e => e.Id == id)).FirstOrDefault();
     }
 }

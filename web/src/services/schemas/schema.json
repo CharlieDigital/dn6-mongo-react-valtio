@@ -10,7 +10,7 @@
         "tags": [
           "Company"
         ],
-        "summary": "Adds a new company to the database.",
+        "summary": "Adds a new company to the database.  Set the ID to the empty string \"\"\r\nand a new ID will be assigned automatically.  The returned entity will\r\nhave the new ID.",
         "operationId": "AddCompany",
         "requestBody": {
           "description": "The company instance to add.",
@@ -96,10 +96,12 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The ID of the entity in the MongoDB",
             "nullable": true
           },
           "label": {
             "type": "string",
+            "description": "The name associated with the entity in the MongoDB",
             "nullable": true
           },
           "address": {
