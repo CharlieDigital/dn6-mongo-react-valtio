@@ -2,7 +2,7 @@
   "name": "dn6-api-mongo",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "cross-env VITE_API_ENDPOINT=http://localhost:5009 vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "codegen": "cd ../api && dotnet build && cd ../web && yarn openapi --input src/services/schemas/schema.json --output src/services --client axios --postfix Service --useOptions --useUnionTypes"
@@ -20,6 +20,7 @@
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
+    "cross-env": "^7.0.3",
     "openapi-typescript-codegen": "^0.12.5",
     "typescript": "^4.4.4",
     "vite": "^2.7.2"

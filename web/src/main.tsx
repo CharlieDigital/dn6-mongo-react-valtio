@@ -4,7 +4,7 @@ import './index.css'
 import App from './App'
 import { OpenAPI } from './services';
 
-OpenAPI.BASE = 'http://localhost:5009';
+OpenAPI.BASE = import.meta.env.VITE_API_ENDPOINT as string;
 
 ReactDOM.render(
   <React.StrictMode>
