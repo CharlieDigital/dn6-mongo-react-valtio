@@ -13,6 +13,8 @@ This project demonstrates the usage of:
 
 The code will run on Windows, MacOS, Linux, and ARM architectures; you can work with it with only VS Code (and probably works with JetBrains Rider).
 
+Get the .NET SDK for Mac, Linux, and Windows here: https://dotnet.microsoft.com/en-us/download
+
 Use this as a starting point for your own code.
 
 ## Rationale
