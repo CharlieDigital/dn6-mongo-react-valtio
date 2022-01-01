@@ -11,8 +11,8 @@ public class CompanyController : ControllerBase
 
     public CompanyController(IDataServices dataServices, ILogger<CompanyController> logger)
     {
-        this._dataServices = dataServices;
-        this._logger = logger;
+        _dataServices = dataServices;
+        _logger = logger;
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public class CompanyController : ControllerBase
     public IEnumerable<Company> GetAllCompanies(int start = 0, int pageSize = 25)
     {
         _logger.LogInformation($"Getting companies from {start} to {start + pageSize}...");
-        IEnumerable<Company> result = this._dataServices.Companies.GetList(start, pageSize);
+        IEnumerable<Company> result = _dataServices.Companies.GetList(start, pageSize);
         return result;
     }
 
@@ -39,7 +39,7 @@ public class CompanyController : ControllerBase
     public async Task<Company> AddCompany([FromBody] Company company)
     {
         _logger.LogInformation("Adding a new company...");
-        Company result = await this._dataServices.Companies.AddAsync(company);
+        Company result = await _dataServices.Companies.AddAsync(company);
         return result;
     }
 
@@ -52,8 +52,8 @@ public class CompanyController : ControllerBase
     public async Task<DeleteResult> DeleteCompany(string id)
     {
         _logger.LogInformation($"Deleting company with ID {id}");
-        DeleteResult result = await this._dataServices.Companies.DeleteAsync(id);
-        await this._dataServices.Employees.DeleteByCompany(id);
+        DeleteResult result = await _dataServices.Companies.DeleteAsync(id);
+        await _dataServices.Employees.DeleteByCompany(id);
         return result;
     }
 
@@ -69,8 +69,8 @@ public class CompanyController : ControllerBase
         _logger.LogInformation($"Getting company with ID: {id} ({full})");
 
         Company? company = full
-            ? this._dataServices.Companies.GetFullEntity(id)
-            : await this._dataServices.Companies.GetAsync(id);
+            ? _dataServices.Companies.GetFullEntity(id)
+            : await _dataServices.Companies.GetAsync(id);
 
         return company;
     }

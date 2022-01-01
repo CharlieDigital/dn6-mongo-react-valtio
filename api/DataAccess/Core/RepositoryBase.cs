@@ -14,12 +14,12 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
 
     protected IMongoCollection<T> Collection
     {
-        get { return this._collection; }
+        get { return _collection; }
     }
 
     protected MongoDbContext Context
     {
-        get { return this._context; }
+        get { return _context; }
     }
 
     /// <summary>
@@ -28,8 +28,8 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <param name="context">The MongoDbContext with the handle to the client.</param>
     protected RepositoryBase(MongoDbContext context)
     {
-        this._context = context;
-        this._collection = context.Database.GetCollection<T>(typeof(T).Name);
+        _context = context;
+        _collection = context.Database.GetCollection<T>(typeof(T).Name);
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
             entity.Id = ObjectId.GenerateNewId().ToString();
         }
 
-        await this._collection.InsertOneAsync(entity);
+        await _collection.InsertOneAsync(entity);
 
         // Return the entity so that it receives the ID.
         return entity;
@@ -58,7 +58,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <returns>The result of the deletion operation.</returns>
     public async virtual Task<DeleteResult> DeleteAsync(string id)
     {
-        return await this._collection.DeleteOneAsync<T>(e => e.Id == id);
+        return await _collection.DeleteOneAsync<T>(e => e.Id == id);
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <returns>The instance of the entity that matches the ID.</returns>
     public async virtual Task<T> GetAsync(string id)
     {
-        return (await this._collection.FindAsync<T>(e => e.Id == id)).FirstOrDefault();
+        return (await _collection.FindAsync<T>(e => e.Id == id)).FirstOrDefault();
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <returns>The specified number of entries starting from the specified start index sorted by title.</returns>
     public virtual IEnumerable<T> GetList(int start, int pageSize, Expression<Func<T, bool>>? whereClause = null)
     {
-        var query = this._collection.AsQueryable();
+        var query = _collection.AsQueryable();
 
         if (whereClause != null)
         {

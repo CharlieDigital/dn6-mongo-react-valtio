@@ -11,8 +11,8 @@ public class EmployeeController : ControllerBase
 
     public EmployeeController(IDataServices dataServices, ILogger<EmployeeController> logger)
     {
-        this._dataServices = dataServices;
-        this._logger = logger;
+        _dataServices = dataServices;
+        _logger = logger;
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public class EmployeeController : ControllerBase
     public async Task<Employee> AddEmployee([FromBody] Employee employee)
     {
         _logger.LogInformation("Adding a new employee...");
-        Employee result = await this._dataServices.Employees.AddAsync(employee);
+        Employee result = await _dataServices.Employees.AddAsync(employee);
         return result;
     }
 
@@ -37,7 +37,7 @@ public class EmployeeController : ControllerBase
     public async Task<DeleteResult> DeleteEmployee(string id)
     {
         _logger.LogInformation($"Deleting employee with ID {id}");
-        DeleteResult result = await this._dataServices.Employees.DeleteAsync(id);
+        DeleteResult result = await _dataServices.Employees.DeleteAsync(id);
         return result;
     }
 
@@ -50,7 +50,7 @@ public class EmployeeController : ControllerBase
     public async Task<Employee> GetEmployee(string id)
     {
         _logger.LogInformation($"Getting employee with ID: {id}");
-        Employee? employee = await this._dataServices.Employees.GetAsync(id);
+        Employee? employee = await _dataServices.Employees.GetAsync(id);
         return employee;
     }
 
@@ -65,7 +65,7 @@ public class EmployeeController : ControllerBase
     public IEnumerable<Employee> GetByCompany(string companyId, int start = 0, int pageSize = 25)
     {
         _logger.LogInformation($"Getting employee for company ID: {companyId}");
-        IEnumerable<Employee> employees =  this._dataServices.Employees.GetByCompany(companyId, start, pageSize);
+        IEnumerable<Employee> employees =  _dataServices.Employees.GetByCompany(companyId, start, pageSize);
         return employees;
     }
 }

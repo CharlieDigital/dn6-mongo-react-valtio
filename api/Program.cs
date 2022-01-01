@@ -5,8 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, config) =>
 {
     config
-        .WriteTo.Console()
-        .WriteTo.File("logs/log.txt");
+        .WriteTo.Console();
+    //    .WriteTo.File("logs/log.txt");
     // Add other targets/sinks here.
     // Serilog has a variety of sinks: https://github.com/serilog/serilog/wiki/Provided-Sinks
     // See the docs here: https://github.com/serilog/serilog/wiki
@@ -50,11 +50,14 @@ if(app.Environment.IsEnvironment("container"))
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // [CC] We need this to call our API from the static front-end
 app.UseCors(options =>

@@ -12,4 +12,10 @@ COPY --from=build /app/published-app /app
 
 # The value 'container' is used in Program.cs to set the URL for Google Cloud Run
 ENV ASPNETCORE_ENVIRONMENT=container
-ENTRYPOINT [ "dotnet", "/app/api.dll" ]
+
+# Environment variables for the connection string
+# See: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#evcp
+# By default uses the localhost
+# See: https://cloud.google.com/run/docs/configuring/environment-variables
+ENV MongoDbConnectionSettings_ConnectionString=mongodb://localhost:27017
+ENTRYPOINT [ "dotnet", "/app/Api.dll" ]
