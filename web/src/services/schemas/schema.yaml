@@ -80,7 +80,7 @@ paths:
     delete:
       tags:
         - Company
-      summary: Deletes a Company given an ID.
+      summary: "Deletes a Company given an ID.  Deletes all Employees that reference the\r\nCompany as well."
       operationId: DeleteCompany
       parameters:
         - name: id

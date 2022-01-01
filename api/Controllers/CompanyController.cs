@@ -44,7 +44,8 @@ public class CompanyController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes a Company given an ID.
+    /// Deletes a Company given an ID.  Deletes all Employees that reference the
+    /// Company as well.
     /// </summary>
     /// <param name="company">The company instance to add.</param>
     [HttpDelete("/api/company/delete/{id}", Name = nameof(DeleteCompany))]
@@ -52,6 +53,7 @@ public class CompanyController : ControllerBase
     {
         _logger.LogInformation($"Deleting company with ID {id}");
         DeleteResult result = await this._dataServices.Companies.DeleteAsync(id);
+        await this._dataServices.Employees.DeleteByCompany(id);
         return result;
     }
 

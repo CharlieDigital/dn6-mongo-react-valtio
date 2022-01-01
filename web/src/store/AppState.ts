@@ -100,7 +100,7 @@ class AppState
     public async loadEmployeesFor(company: Company)
     {
         let response = await EmployeeService.getByCompany({
-            id: company.id || '',
+            companyId: company.id || '',
             start: 0
         })
 

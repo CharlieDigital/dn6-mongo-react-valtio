@@ -26,4 +26,14 @@ public class EmployeeRepository : RepositoryBase<Employee>
     {
         return base.GetList(start, pageSize, (e) => e.Company!.Id == companyId);
     }
+
+    /// <summary>
+    /// Deletes Employee entities for a given Company.
+    /// </summary>
+    /// <param name="companyId">The company that is being deleted.</param>
+    /// <returns>The result of the delete opration.</returns>
+    public virtual async Task<DeleteResult> DeleteByCompany(string companyId)
+    {
+        return await Collection.DeleteManyAsync<Employee>(e => e.Company!.Id == companyId);
+    }
 }

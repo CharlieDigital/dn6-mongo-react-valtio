@@ -27,7 +27,7 @@ function Row(props: { company: Company })
     {
         if (open && !loaded)
         {
-            console.log("Loading employees...");
+            console.log(`Loading employees for company ${company.id}...`);
 
             (async () => await appState.loadEmployeesFor(company))()
                 .catch(console.log);
