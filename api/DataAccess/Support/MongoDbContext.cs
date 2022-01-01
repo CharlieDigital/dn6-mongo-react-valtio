@@ -33,7 +33,7 @@ public class MongoDbContext
         MongoDbConnectionSettings settings = options.Value;
 
         Log.Information($"Connecting to database: {settings.DatabaseName}");
-        Log.Information($"Connecting to with string: {settings.ConnectionString}");
+        Log.Information($"Connecting to with string: {settings.ConnectionString.Substring(0, 20)}*****");
 
         _client = new MongoClient(settings.ConnectionString);
         _database = _client.GetDatabase(settings.DatabaseName);

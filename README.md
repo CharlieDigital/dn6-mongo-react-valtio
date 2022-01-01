@@ -342,6 +342,19 @@ In production, you're better off using Azure SignalR as this provides a low-cost
 
 Use the local hub for development and switch to Azure SignalR in production.
 
+## Google Cloud Run (GCR)
+
+In GCR, the easiest way to get started is to connect your GCR project to your GitHub repo and mirror the repo.
+
+In the runtime, you'll need to override the configuration by adding two environment variables (or secrets):
+
+|Environment Variable|Description|
+|---|---|
+|`MongoDbConnectionSettings__ConnectionString`|Overrides the connection string in the `appsettings.json` file.|
+|`MongoDbConnectionSettings__DatabaseName`|Overrides the database name in the `appsettings.json` file.|
+
+If you are running this with a free Mongo Atlas account, don't forget to allow all IP addresses (pick a strong password!) since the GCR instance does not have a static IP without a VPC in Google Cloud.
+
 ## Resources
 
 - [.NET Core Web API MongoDB Tutorial](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code)
