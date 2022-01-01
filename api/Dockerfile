@@ -17,5 +17,5 @@ ENV ASPNETCORE_ENVIRONMENT=container
 # See: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#evcp
 # By default uses the localhost
 # See: https://cloud.google.com/run/docs/configuring/environment-variables
-ENV MongoDbConnectionSettings_ConnectionString=mongodb://localhost:27017
+# ENV MongoDbConnectionSettings_ConnectionString=mongodb://localhost:27017
 ENTRYPOINT [ "dotnet", "/app/Api.dll" ]
