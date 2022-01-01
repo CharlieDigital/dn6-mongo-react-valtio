@@ -31,6 +31,10 @@ public class MongoDbContext
     public MongoDbContext(IOptions<MongoDbConnectionSettings> options)
     {
         MongoDbConnectionSettings settings = options.Value;
+
+        Log.Information($"Connecting to database: {settings.DatabaseName}");
+        Log.Information($"Connecting to with string: {settings.ConnectionString}");
+
         _client = new MongoClient(settings.ConnectionString);
         _database = _client.GetDatabase(settings.DatabaseName);
     }
