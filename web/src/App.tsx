@@ -75,7 +75,7 @@ function Row(props: { company: Company })
                                         <TableCell>Title</TableCell>
                                         <TableCell>First Name</TableCell>
                                         <TableCell>Last Name</TableCell>
-                                        <TableCell>Compensation Name</TableCell>
+                                        <TableCell>Compensation</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
