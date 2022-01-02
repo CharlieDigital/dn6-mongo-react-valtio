@@ -3,6 +3,15 @@ info:
   title: 'Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'
   version: '1.0'
 paths:
+  /api/admin/reset:
+    get:
+      tags:
+        - Admin
+      summary: Resets the environment by dropping the collections.
+      operationId: ResetEnv
+      responses:
+        '200':
+          description: Success
   '/api/company/list/{start}/{pageSize}':
     get:
       tags:

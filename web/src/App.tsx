@@ -63,7 +63,8 @@ function Row(props: { company: Company })
                                     variant="outlined"
                                     size="small"
                                     startIcon={ <Add/> }
-                                    onClick={ async() => await appState.addEmployeeTo(company) }>
+                                    onClick={ async() => await appState.addEmployeeTo(company) }
+                                    disabled={ company.employees ? company.employees.length <= 10 : false }>
                                     Add Employee
                                 </Button>
                             </Typography>
@@ -111,6 +112,9 @@ function App()
             <Card
                 sx={{ mx: "auto", my: 4, width: 720 }}
                 variant="outlined">
+                <CardContent>
+                    This app resets every 2 hours.  See the OpenAPI spec <a href={ `${import.meta.env.VITE_API_ENDPOINT}/swagger/index.html` }>here</a>.
+                </CardContent>
                 <CardContent>
                     Click the button to add a randomly generated Company.
                     <Button
