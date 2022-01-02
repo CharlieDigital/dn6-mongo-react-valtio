@@ -27,4 +27,10 @@ public class DataServices : IDataServices
     /// </summary>
     /// <returns>The repository instance.</returns>
     public EmployeeRepository Employees => new EmployeeRepository(this._context);
+
+    /// <summary>
+    /// Repository for admin functions.
+    /// </summary>
+    /// <returns>The repository instance</returns>
+    public AdminRepository Admin => new AdminRepository(this._context);
 }

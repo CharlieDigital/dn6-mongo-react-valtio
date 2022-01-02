@@ -16,4 +16,9 @@ public interface IDataServices
     /// Repository for accessing Employee instances.
     /// </summary>
     public EmployeeRepository Employees { get; }
+
+    /// <summary>
+    /// Repository for accessing Admiin functions.
+    /// </summary>
+    public AdminRepository Admin { get; }
 }
