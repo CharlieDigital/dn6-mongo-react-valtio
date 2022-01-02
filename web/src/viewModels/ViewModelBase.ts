@@ -11,6 +11,6 @@ export abstract class ViewModelBase<T>
      */
     constructor(public model: T)
     {
-
+        console.log("Creating instance...");
     }
 }

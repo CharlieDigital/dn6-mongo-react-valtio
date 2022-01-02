@@ -126,6 +126,8 @@ class AppState
             });
         });
 
+        console.log("Calculating total compensation...");
+
         return total;
     }
 }

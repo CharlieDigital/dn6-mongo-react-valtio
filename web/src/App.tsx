@@ -16,6 +16,11 @@ async function addCompany()
     await appState.addRandomCompany();
 }
 
+function reducer(a: number, b: number): number
+{
+    return a + b;
+}
+
 // Represents an expandable row.
 function Row(props: { company: Company })
 {
@@ -45,7 +50,7 @@ function Row(props: { company: Company })
                         { open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
                     </IconButton>
                 </TableCell>
-                <TableCell><strong>{ company.label }</strong> ${ (new CompanyVM(company)).totalCompensation }</TableCell>
+                <TableCell><strong>{ company.label }</strong> ${ company.employees ? company.employees?.map(e => e.salary || 0).reduce(reducer, 0) : 0 }</TableCell>
                 <TableCell>{ company.id }</TableCell>
                 <TableCell>
                     <IconButton onClick={ async() => await appState.deleteCompany(company) }>
