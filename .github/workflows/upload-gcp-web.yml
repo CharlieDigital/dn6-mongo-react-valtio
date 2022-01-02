@@ -37,9 +37,9 @@ jobs:
         working-directory: ./web
         run: yarn
 
-      - name: Build for production with Quasar CLI
+      - name: Build for production using vite
         working-directory: ./web
-        run: VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT }} yarn build
+        run: VITE_API_ENDPOINT=${{ secrets.VITE_API_ENDPOINT }} yarn run build --base=${{ secrets.GCP_BASE_URL }}
 
       # See docs: https://github.com/google-github-actions/upload-cloud-storage
       - id: 'auth'
