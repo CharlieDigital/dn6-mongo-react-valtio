@@ -79,22 +79,24 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
     /// <param name="pageSize">The number of entries to retrieve.</param>
     /// <param name="whereClause">An optional where clause to apply.</param>
     /// <returns>The specified number of entries starting from the specified start index sorted by title.</returns>
-    public virtual IEnumerable<T> GetList(int start, int pageSize, Expression<Func<T, bool>>? whereClause = null)
+    public async virtual Task<IEnumerable<T>> GetList(int start, int pageSize, Expression<Func<T, bool>>? whereClause = null)
     {
         var query = _collection.AsQueryable();
 
         if (whereClause != null)
         {
-            return query
+            return await query
                 .Where(whereClause)
                 .OrderBy(e => e.Label)
                 .Skip(start)
-                .Take(pageSize);;
+                .Take(pageSize)
+                .ToListAsync();
         }
 
-        return query
+        return await query
             .OrderBy(e => e.Label)
             .Skip(start)
-            .Take(pageSize);
+            .Take(pageSize)
+            .ToListAsync();
     }
 }

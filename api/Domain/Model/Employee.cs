@@ -16,6 +16,11 @@ public class Employee : MongoEntityBase
     public string? LastName { get; set; }
 
     /// <summary>
+    /// The salary assigned to the employee.
+    /// </summary>
+    public int Salary { get; set; } = 0;
+
+    /// <summary>
     /// A reference to the Company that an Employee works for.
     /// </summary>
     [MongoRef(typeof(Company))]

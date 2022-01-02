@@ -50,7 +50,8 @@ requestBody?: Company,
     }
 
     /**
-     * Deletes a Company given an ID.
+     * Deletes a Company given an ID.  Deletes all Employees that reference the
+ * Company as well.
      * @returns DeleteResult Success
      * @throws ApiError
      */

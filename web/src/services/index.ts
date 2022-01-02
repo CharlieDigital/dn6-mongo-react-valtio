@@ -10,5 +10,6 @@ export type { DeleteResult } from './models/DeleteResult';
 export type { Employee } from './models/Employee';
 export type { EntityRef } from './models/EntityRef';
 
+export { AdminService } from './services/AdminService';
 export { CompanyService } from './services/CompanyService';
 export { EmployeeService } from './services/EmployeeService';

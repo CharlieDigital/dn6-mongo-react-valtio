@@ -510,6 +510,11 @@
             "description": "The last name of the employee.",
             "nullable": true
           },
+          "salary": {
+            "type": "integer",
+            "description": "The salary assigned to the employee.",
+            "format": "int32"
+          },
           "company": {
             "$ref": "#/components/schemas/EntityRef"
           }

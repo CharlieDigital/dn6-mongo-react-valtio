@@ -8,6 +8,7 @@ import { useSnapshot } from "valtio";
 import React, { useEffect, useState } from "react";
 import { appState } from "./store/AppState";
 import { Company } from "./services";
+import { CompanyVM } from "./viewModels/CompanyVM";
 
 // Add a company to the global state.
 async function addCompany()
@@ -44,8 +45,8 @@ function Row(props: { company: Company })
                         { open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
                     </IconButton>
                 </TableCell>
+                <TableCell><strong>{ company.label }</strong> ${ (new CompanyVM(company)).totalCompensation }</TableCell>
                 <TableCell>{ company.id }</TableCell>
-                <TableCell>{ company.label }</TableCell>
                 <TableCell>
                     <IconButton onClick={ async() => await appState.deleteCompany(company) }>
                         <DeleteIcon />
@@ -71,8 +72,10 @@ function Row(props: { company: Company })
                             <Table size="small">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>FirstName</TableCell>
-                                        <TableCell>LastName</TableCell>
+                                        <TableCell>Title</TableCell>
+                                        <TableCell>First Name</TableCell>
+                                        <TableCell>Last Name</TableCell>
+                                        <TableCell>Compensation Name</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -80,8 +83,10 @@ function Row(props: { company: Company })
                                         company.employees?.map((employee) =>
                                         (
                                             <TableRow key={ employee.id }>
+                                                <TableCell>{ employee.label }</TableCell>
                                                 <TableCell>{ employee.firstName }</TableCell>
                                                 <TableCell>{ employee.lastName }</TableCell>
+                                                <TableCell>${ employee.salary }</TableCell>
                                             </TableRow>
                                         ))
                                     }
@@ -132,14 +137,14 @@ function App()
                         </Button>
                     </CardContent>
                     <CardContent>
-                        Showing { companies.length } companies (max 10; delete or reset to restart).
+                        Showing { companies.length } companies (max 10; delete or reset to restart).  Total comp: <strong>${ appState.totalCompensation }</strong>
 
-                        <Table>
+                        <Table size="small">
                             <TableHead>
                                 <TableRow>
                                     <TableCell>+</TableCell>
-                                    <TableCell>ID</TableCell>
                                     <TableCell>Company</TableCell>
+                                    <TableCell>ID</TableCell>
                                     <TableCell>Delete</TableCell>
                                 </TableRow>
                             </TableHead>

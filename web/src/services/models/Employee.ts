@@ -24,5 +24,9 @@ export type Employee = {
      * The last name of the employee.
      */
     lastName?: string | null;
+    /**
+     * The salary assigned to the employee.
+     */
+    salary?: number;
     company?: EntityRef;
 }

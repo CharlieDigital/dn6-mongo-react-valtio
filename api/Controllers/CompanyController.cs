@@ -22,10 +22,10 @@ public class CompanyController : ControllerBase
     /// <param name="pageSize">The number of entries to retrieve.  Optional; 25 if not specified.</param>
     /// <returns>The companies starting from a given index and page size.</returns>
     [HttpGet("/api/company/list/{start:int?}/{pageSize:int?}", Name = nameof(GetAllCompanies))]
-    public IEnumerable<Company> GetAllCompanies(int start = 0, int pageSize = 25)
+    public async Task<IEnumerable<Company>> GetAllCompanies(int start = 0, int pageSize = 25)
     {
         _logger.LogInformation($"Getting companies from {start} to {start + pageSize}...");
-        IEnumerable<Company> result = _dataServices.Companies.GetList(start, pageSize);
+        IEnumerable<Company> result = await _dataServices.Companies.GetList(start, pageSize);
         return result;
     }
 
@@ -64,12 +64,12 @@ public class CompanyController : ControllerBase
     /// <param name="full">When specified, returns the rich object</param>
     /// <returns>The Company instance that matches the ID.</returns>
     [HttpGet("/api/company/{id}/{full?}", Name = nameof(GetCompany))]
-    public async Task<Company> GetCompany(string id, bool full = false)
+    public async Task<Company?> GetCompany(string id, bool full = false)
     {
         _logger.LogInformation($"Getting company with ID: {id} ({full})");
 
         Company? company = full
-            ? _dataServices.Companies.GetFullEntity(id)
+            ? await _dataServices.Companies.GetFullEntity(id)
             : await _dataServices.Companies.GetAsync(id);
 
         return company;

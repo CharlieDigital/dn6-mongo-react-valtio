@@ -1,7 +1,7 @@
 import { proxy } from "valtio";
 import { CompanyService, Employee, EmployeeService } from "../services";
 import { Company } from "../services/models/Company";
-import { companyNames, firstNames, lastNames } from "./RandomData"
+import { companyNames, firstNames, lastNames, titles } from "./RandomData"
 
 class AppState
 {
@@ -74,12 +74,15 @@ class AppState
     {
         const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
         const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+        const title = titles[Math.floor(Math.random() * titles.length)];
+        const salary = Math.floor(Math.random() * (250000 - 125000) + 125000);
 
         const employee: Employee = {
             id: '',
-            label: `${lastName}, ${firstName}`,
+            label: title,
             firstName: firstName,
             lastName: lastName,
+            salary: salary,
             company: {
                 id: company.id,
                 label: company.label,
@@ -106,6 +109,24 @@ class AppState
 
         appState.companies.find(c => c.id === company.id)
             ?.employees?.splice(0, 0, ...response);
+    }
+
+    /**
+     * Computed getter which returns the total compensation of all employees.
+     */
+    public get totalCompensation() : Number
+    {
+        let total = 0;
+
+        appState.companies.forEach(c =>
+        {
+            c.employees?.forEach(e =>
+            {
+                total += e.salary || 0;
+            });
+        });
+
+        return total;
     }
 }
 

@@ -18,7 +18,7 @@ public class AdminController : ControllerBase
     /// <summary>
     /// Resets the environment by dropping the collections.
     /// </summary>
-    [HttpGet("/api/admin/reset", Name = nameof(ResetEnv))]
+    [HttpDelete("/api/admin/reset", Name = nameof(ResetEnv))]
     public async Task ResetEnv()
     {
         await _dataServices.Admin.DropCollectionsAsync();

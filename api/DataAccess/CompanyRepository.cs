@@ -20,13 +20,13 @@ public class CompanyRepository : RepositoryBase<Company>
     /// </summary>
     /// <param name="id">The ID of the Company to retrieve.</param>
     /// <returns>The Company with the Employees populated.</returns>
-    public Company? GetFullEntity(string id)
+    public async Task<Company?> GetFullEntity(string id)
     {
         // See: https://www.niceonecode.com/blog/64/left-join-in-mongodb-using-the-csharp-driver-and-linq
         IMongoCollection<Employee> employees =
             Context.Database.GetCollection<Employee>(nameof(Employee));
 
-        var result = Collection.AsQueryable()
+        var result = await Collection.AsQueryable()
             .Where(company => company.Id == id)
             .GroupJoin(
                 employees.AsQueryable(),
@@ -34,7 +34,7 @@ public class CompanyRepository : RepositoryBase<Company>
                 employee => employee.Company!.Id,
                 (c, companyEmployees) => new {
                     c, companyEmployees
-                }).FirstOrDefault();
+                }).FirstOrDefaultAsync();
 
         /* Equivalent.
         var result = (from c in Collection.AsQueryable()

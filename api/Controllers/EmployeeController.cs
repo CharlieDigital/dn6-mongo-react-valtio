@@ -62,10 +62,10 @@ public class EmployeeController : ControllerBase
     /// <param name="pageSize">The number of companies to retrieve.</param>
     /// <returns>The specified number of companies starting from the specified start index sorted by title.</returns>
     [HttpGet("/api/employee/company/{companyId}/{start:int?}/{pageSize:int?}", Name = nameof(GetByCompany))]
-    public IEnumerable<Employee> GetByCompany(string companyId, int start = 0, int pageSize = 25)
+    public async Task<IEnumerable<Employee>> GetByCompany(string companyId, int start = 0, int pageSize = 25)
     {
         _logger.LogInformation($"Getting employee for company ID: {companyId}");
-        IEnumerable<Employee> employees =  _dataServices.Employees.GetByCompany(companyId, start, pageSize);
+        IEnumerable<Employee> employees = await _dataServices.Employees.GetByCompany(companyId, start, pageSize);
         return employees;
     }
 }
