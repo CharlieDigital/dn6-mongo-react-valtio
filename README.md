@@ -259,7 +259,7 @@ dotnet run
 Or
 
 ```
-cd pi
+cd api
 dotnet watch
 ```
 
