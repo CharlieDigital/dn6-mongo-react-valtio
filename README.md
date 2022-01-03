@@ -332,11 +332,14 @@ To run the tests:
 cd tests/api
 dotnet test                                     # Run the test normally
 dotnet test -l "console;verbosity=detailed"     # Run the test and see trace messages
+dotnet test -l:junit                            # Run the test with JUnit XML output
 ```
 
 Tip: see the `.vscode/settings.json` file to see the setup for the test explorer test resolution.
 
 This can be integrated into [GitHub Actions](https://docs.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action).
+
+For JUnit output, the [JUnit.TestLogger](https://github.com/spekt/junit.testlogger) package has been added.  This primarily supports CI/CD pipelines.
 
 ## Logging
 
