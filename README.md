@@ -301,6 +301,23 @@ $response = Invoke-RestMethod 'http://localhost:5009/api/company/delete/61cf5f0b
 
 ## Adding Tests
 
+The project includes setup of two types of tests:
+
+- **API tests** - these test the back-end of the application.
+- **End-to-end tests (E2E)** - these test the end-to-end behavior of the application.
+
+With these two sets of tests, it's up to you decide if you still want to unit test your front-end.  Generally, the E2E is more "valuable" since it tests the full stack and behavior of your application but if poorly designed, can take too long to run compared to true unit tests.
+
+On the flip side, front-end unit tests depend on mocking and can produce false positives (tests that pass with mocks, but not with real-world data).  In general, I recommend teams go for the E2E tests because Playwright is *fast* and it tests the "real" application.  Additionally, well designed E2E tests can be pointed to any environment in the future.
+
+### Core API Tests
+
+The API tests are used to test the core data access components.  This is often the most critical part of the application.
+
+Some may consider this an integration test rather than a true unit test since the example tests the repository and requires a running instance of MongoDB.
+
+In any case, it allows you to test your data access logic and queries to ensure that they are correct.
+
 To add the tests, run:
 
 ```
@@ -341,6 +358,26 @@ This can be integrated into [GitHub Actions](https://docs.microsoft.com/en-us/do
 
 For JUnit output, the [JUnit.TestLogger](https://github.com/spekt/junit.testlogger) package has been added.  This primarily supports CI/CD pipelines.
 
+### E2E Tests with Playwright
+
+The end-to-end tests have been configured to use [Playwright](https://playwright.dev/).
+
+It can be run on your local or in a CI/CD pipeline in headless mode.
+
+To run the tests:
+
+```
+cd tests/e2e
+npm run test
+```
+
+Playwright has great tooling including:
+
+- [Inspector](https://playwright.dev/docs/inspector)
+- [Trace Viewer](https://playwright.dev/docs/trace-viewer)
+- [Test Generator](https://playwright.dev/docs/codegen)
+
+Unlike Cypress, it [supports multiple browsers](https://playwright.dev/docs/browsers) giving you great coverage for your userbase.  It also handles multiple tabs and windows using [BrowserContext](https://playwright.dev/docs/api/class-browsercontext);
 ## Logging
 
 [Serilog](https://serilog.net/) has been injected in `Program.cs`.

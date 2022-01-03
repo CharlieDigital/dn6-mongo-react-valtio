@@ -54,7 +54,7 @@ function Row(props: { company: Company })
                 <TableCell>{ company.id }</TableCell>
                 <TableCell>
                     <IconButton onClick={ async() => await appState.deleteCompany(company) }>
-                        <DeleteIcon />
+                        <DeleteIcon titleAccess="Delete Company"/>
                     </IconButton>
                 </TableCell>
             </TableRow>
