@@ -4,7 +4,7 @@ info:
   version: '1.0'
 paths:
   /api/admin/reset:
-    get:
+    delete:
       tags:
         - Admin
       summary: Resets the environment by dropping the collections.

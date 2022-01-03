@@ -29,13 +29,21 @@ public class MongoDbContext
     /// </summary>
     /// <param name="settings">The connection settings as configured in appsettings.json</param>
     public MongoDbContext(IOptions<MongoDbConnectionSettings> options)
+        : this(options.Value.ConnectionString, options.Value.DatabaseName)
     {
-        MongoDbConnectionSettings settings = options.Value;
+        Log.Information($"Connecting to database: {options.Value.DatabaseName}");
+        Log.Information($"Connecting to with string: {options.Value.ConnectionString.Substring(0, 20)}*****");
+    }
 
-        Log.Information($"Connecting to database: {settings.DatabaseName}");
-        Log.Information($"Connecting to with string: {settings.ConnectionString.Substring(0, 20)}*****");
-
-        _client = new MongoClient(settings.ConnectionString);
-        _database = _client.GetDatabase(settings.DatabaseName);
+    /// <summary>
+    /// Direct constructor which can be used for unit testing.  The DI constructor
+    /// simply calls into this constructor.
+    /// </summary>
+    /// <param name="connectionString">The connection string to use.</param>
+    /// <param name="databaseName">The database name to use.</param>
+    public MongoDbContext(string connectionString, string databaseName)
+    {
+        _client = new MongoClient(connectionString);
+        _database = _client.GetDatabase(databaseName);
     }
 }

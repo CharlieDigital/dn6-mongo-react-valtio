@@ -326,6 +326,16 @@ dotnet sln add tests
 
 Finally, point OmniSharp to the `.sln` file by typing `CTRL+SHIFT+P` and then `OmniSharp: Select Project`.
 
+To run the tests:
+
+```
+cd tests/api
+dotnet test                                     # Run the test normally
+dotnet test -l "console;verbosity=detailed"     # Run the test and see trace messages
+```
+
+Tip: see the `.vscode/settings.json` file to see the setup for the test explorer test resolution.
+
 ## Logging
 
 [Serilog](https://serilog.net/) has been injected in `Program.cs`.

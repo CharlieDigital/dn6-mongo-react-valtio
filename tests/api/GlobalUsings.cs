@@ -1,0 +1,10 @@
+global using System.IO;
+global using System.Diagnostics;
+global using Api.DataAccess;
+global using Api.DataAccess.Support;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+global using System;
+global using Api.Domain.Model;
+global using MongoDB.Driver;
+global using System.Threading.Tasks;
