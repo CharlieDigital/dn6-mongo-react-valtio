@@ -17,6 +17,8 @@ Get the .NET SDK for Mac, Linux, and Windows here: https://dotnet.microsoft.com/
 
 Use this as a starting point for your own code.
 
+For .C# development in VS Code, grab the OmniSharp extension.  Grab [at least 1.24.0-beta1](https://github.com/OmniSharp/omnisharp-vscode/releases/tag/v1.24.0-beta1) and install manually as there is a defect in earlier versions which causes an issue with .NET 6 projects.
+
 ## Rationale
 
 The key objective of this stack is to fulfill the following:
@@ -30,6 +32,10 @@ According to [GitHub's State of the Octoverse Security Report from 2020](https:/
 - The highest number of critical and high advisories
 - The highest number of Dependabot alerts
 - A lag time of *218 weeks* before a vulnerability is detected and patched
+
+Because of the philosophy of the NPM ecosystem ("Do one thing, do it well"; for example, many projects need to import libraries to simply work with date times because the base JavaScript date/time facilities are so lacking), it means that each project will have dozens if not hundreds or even thousands (not unheard of for mature projects) transitive dependencies that could pose a security threat.  Building any Node project always spits out a list of possible vulnerabilities and upgrades that *should* be addressed but rarely gets addressed by teams for a variety of reasons.
+
+While this is unavoidable for building modern web front-ends, it poses a risk on server applications -- especially when handling sensitive data.  Over time, the cost of maintaining patch state becomes a chore in and of itself.
 
 ### Performance
 
@@ -144,8 +150,9 @@ const createPersonRepository = (): IRepository<Person> => {
 };
 ```
 
-
 But if you are already planning on adopting stronger typing on the server, it seems like a good opportunity to simply step up to C# instead.
+
+.NET's LINQ facilities provide a functional approach using lambda closures that many JavaScript and TypeScript developers are already familiar with.
 
 ### Productivity with .NET MongoDB Driver LINQ
 
@@ -394,7 +401,15 @@ In production, you're better off using Azure SignalR as this provides a low-cost
 
 Use the local hub for development and switch to Azure SignalR in production.
 
-## Google Cloud Run (GCR)
+## Operationalizing
+
+The solution can be operationalized into Google Cloud Run (back-end) and Google Storage Buckets (front-end).
+
+![Operationalization](static/deploy-arch.png)
+
+It is also possible to do this with other cloud providers' equivalent service.
+
+### Google Cloud Run (GCR)
 
 In GCR, the easiest way to get started is to connect your GCR project to your GitHub repo and mirror the repo.
 
@@ -406,6 +421,42 @@ In the runtime, you'll need to override the configuration by adding two environm
 |`MongoDbConnectionSettings__DatabaseName`|Overrides the database name in the `appsettings.json` file.|
 
 If you are running this with a free Mongo Atlas account, don't forget to allow all IP addresses (pick a strong password!) since the GCR instance does not have a static IP without a VPC in Google Cloud.
+
+Both AWS and Azure offer similar capabilities, though none are as mature of Google Cloud Run at the moment:
+
+- [Amazon AWS App Runner](https://aws.amazon.com/apprunner/) - currently only supports Node and Python
+- [Azure Container Apps](https://azure.microsoft.com/en-us/services/container-apps/) - currently in preview, but supports the excellent [Dapr](https://dapr.io/) runtime.
+
+### Google Cloud Storage Buckets and Static Websites
+
+Modern web applications do not need to have a hosted web server; front-ends can instead be served directly from cloud storage buckets.  This has multiple benefits:
+
+1. It is cheap, incredibly scalable, and highly performant; even more so with a CDN in front of the static output of your build process.
+2. It reduces the scope of systems management by removing Yet Another Server from your infrastructure.
+3. It integrates really nicely with GitHub Actions or other CI/CD automation for pushing builds directly from source.
+
+In this project, you can see how this is done via the GitHub Action in `.github/workflows/upload-gcp-web.yml`.
+
+This GH Action kicks off whenever there is a change to a file in the `/web` directory and automatically builds the front-end project and pushes it into a Google Cloud Storage Bucket.
+
+The Action requires three inputs:
+
+|Parameter|Description|
+|---|---|
+|`VITE_API_ENDPOINT`|The API endpoint in Google Cloud Run that the front-end will connect to.|
+|`GCP_CREDENTIALS`|The JSON formatted credentials of the service account to use when pushing the files into the Storage Bucket from GitHub.|
+|`GCP_BASE_URL`|The base URL of the static website bucket that is injected at build time.|
+
+These need to be configured in the GitHub Secrets for your project:
+
+![GitHub Secrets](static/github-secrets.png)
+
+Both AWS and Azure offer similar capabilities:
+
+- [Amazon AWS S3 Static Websites](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html) - has great integration with Cloudfront for CDN
+- [Azure Storage Static Websites](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website) - very easy to implement, has great integration with Functions, and also has CDN integration
+
+One note with the Google Cloud Storage Buckets is that there is a default 3600 second cache for all artifacts uploaded into Google Cloud Storage.  This can be problematic because even if you manually set to the `Cache-Control` to `no-store`, every publish will overwrite the metadata and set it back to the default 3600.  When this occurs, your front-end does not update and there is no mechanism to force it to do so.  The workaround is to have a proxy or CDN in front of the app that will generate a random URL token to force a fresh read and then cache at the proxy or CDN instead of directly in Google Storage (neither AWS nor Azure behave the same way; both require explicit activation of caching or usage of the CDN).
 
 ## Resources
 
