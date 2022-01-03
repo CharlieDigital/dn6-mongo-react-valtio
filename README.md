@@ -336,6 +336,8 @@ dotnet test -l "console;verbosity=detailed"     # Run the test and see trace mes
 
 Tip: see the `.vscode/settings.json` file to see the setup for the test explorer test resolution.
 
+This can be integrated into [GitHub Actions](https://docs.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action).
+
 ## Logging
 
 [Serilog](https://serilog.net/) has been injected in `Program.cs`.
