@@ -37,7 +37,9 @@ Because of the philosophy of the NPM ecosystem ("Do one thing, do it well"; for 
 
 While this is unavoidable for building modern web front-ends, it poses a risk on server applications -- especially when handling sensitive data.  Over time, the cost of maintaining patch state becomes a chore in and of itself.
 
-This Erlang video perhaps puts it best
+[Erlang The Movie II: The Sequel](https://www.youtube.com/watch?v=rRbY3TMUcgQ) [puts it best](https://youtu.be/rRbY3TMUcgQ?t=236):
+
+> I like Node.js because as my hero, [Ryan Dahl says it's like coloring with crayons and playing with Duplo blocks](https://news.ycombinator.com/item?id=4310723), but as it turns out it's less like playing with Duplo blocks and more like playing with Slinkies.  Slinkies that get tangled together and impossible to separate.
 
 ### Performance
 
