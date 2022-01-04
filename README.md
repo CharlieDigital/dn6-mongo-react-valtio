@@ -37,6 +37,8 @@ Because of the philosophy of the NPM ecosystem ("Do one thing, do it well"; for 
 
 While this is unavoidable for building modern web front-ends, it poses a risk on server applications -- especially when handling sensitive data.  Over time, the cost of maintaining patch state becomes a chore in and of itself.
 
+This Erlang video perhaps puts it best
+
 ### Performance
 
 Multiple benchmarks show that .NET Core is now in the same performance tier as Go and Rust in real-world workloads while still being highly accessible and easy to hire for.
@@ -188,6 +190,32 @@ var filtered = names.Where(Filter); // Pass the filter function as an argument
 names.Where(Filter)
     .ToList()
     .ForEach(Console.WriteLine);
+```
+
+Async/Await for *asynchronous programming* in C# and JavaScript are also very similar:
+
+```js
+// JavaScript
+async function doSomething() { } // Async method.
+await doSomething(); // Invoke async method.
+```
+
+And C#:
+
+```cs
+// C#
+async Task DoSomething() { } // Async method.
+await DoSomething(); // Invoke async method.
+```
+
+[C# asynchronous programming](https://docs.microsoft.com/en-us/dotnet/csharp/async) makes use of the [Task class](https://docs.microsoft.com/en-us/dotnet/standard/async-in-depth) and, like JavaScript, implements the [Promise Model of Concurrency](https://en.wikipedia.org/wiki/Futures_and_promises).
+
+On top of this, [.NET's Task Parallel Library](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/task-parallel-library-tpl) makes concurrent programming very accessible to maximize your compute resources for workloads that can be run in parallel:
+
+```cs
+Parallel.For(0, largeList.Length, (i, state) => {
+    // Parallel compute; be sure you know how to handle thread safety!
+});
 ```
 
 C#'s congruence to TypeScript and JavaScript makes a strong case for adopting it on the server, especially when the goal is to achieve a secure, high performance runtime.
