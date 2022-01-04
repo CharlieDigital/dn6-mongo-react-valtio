@@ -154,6 +154,20 @@ But if you are already planning on adopting stronger typing on the server, it se
 
 .NET's LINQ facilities provide a functional approach using lambda closures that many JavaScript and TypeScript developers are already familiar with.
 
+```ts
+// TypeScript/JavaScript
+const names = people.map(p => p.firstName);
+const chens = people.filter(p => p.lastName.toLowerCase() === "chen");
+```
+
+```cs
+// C#
+var names = people.Select(p => p.FirstName);
+var chens = people.Where(p => p.LastName.toLowerInvariant() == "chen");
+```
+
+C#'s congruence to TypeScript and JavaScript makes a strong case for adopting it on the server, especially when the goal is to achieve a secure, high performance runtime.
+
 ### Productivity with .NET MongoDB Driver LINQ
 
 At scale, teams *need* to have a strongly typed data model in the API.  Starting from a loosely/untyped data model in the early stages of a project can be critical for speed, but as the team grows, as customers seek APIs for integration, as the complexity of the domain space increases, the lack of a strongly-typed data model at the API is a bottleneck for growth and leads to slapdash code, high duplication, and high rates of defects that eventually start to hamper growth.
