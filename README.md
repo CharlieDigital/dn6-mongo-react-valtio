@@ -158,12 +158,36 @@ But if you are already planning on adopting stronger typing on the server, it se
 // TypeScript/JavaScript
 const names = people.map(p => p.firstName);
 const chens = people.filter(p => p.lastName.toLowerCase() === "chen");
+const smiths = people.map(p => p.firstName)
+                     .filter(n => n.toLowerCase() === "smith");
 ```
 
 ```cs
 // C#
 var names = people.Select(p => p.FirstName);
-var chens = people.Where(p => p.LastName.toLowerInvariant() == "chen");
+var chens = people.Where(p => p.LastName.ToLowerInvariant() == "chen");
+var smiths = people.Select(p => p.FirstName)
+                   .Where(n => n.ToLowerInvariant() == "smith");
+```
+
+Compare [LINQ's standard operators](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/classification-of-standard-query-operators-by-manner-of-execution#classification-table) with [JavaScript arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
+
+Like JavaScript, functions can be passed as arguments in C#:
+
+```cs
+public static bool Filter(string name)
+{
+    return name.StartsWith('T');
+}
+
+var names = new [] { "Tom", "James", "Anish", "Michelle", "Terry" };
+
+var filtered = names.Where(Filter); // Pass the filter function as an argument
+
+// Or chain the commands.
+names.Where(Filter)
+    .ToList()
+    .ForEach(Console.WriteLine);
 ```
 
 C#'s congruence to TypeScript and JavaScript makes a strong case for adopting it on the server, especially when the goal is to achieve a secure, high performance runtime.
