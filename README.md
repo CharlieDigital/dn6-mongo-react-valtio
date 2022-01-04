@@ -220,6 +220,12 @@ Parallel.For(0, largeList.Length, (i, state) => {
 
 C#'s congruence to TypeScript and JavaScript makes a strong case for adopting it on the server, especially when the goal is to achieve a secure, high performance runtime.
 
+There's a whole slew of [functional techniques](https://softchris.github.io/pages/dotnet-csharp-news.html#property-pattern) including:
+
+- [Pattern matching](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching)
+- [Tuple types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples)
+- [Deconstructing](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/deconstruct)
+
 ### Productivity with .NET MongoDB Driver LINQ
 
 At scale, teams *need* to have a strongly typed data model in the API.  Starting from a loosely/untyped data model in the early stages of a project can be critical for speed, but as the team grows, as customers seek APIs for integration, as the complexity of the domain space increases, the lack of a strongly-typed data model at the API is a bottleneck for growth and leads to slapdash code, high duplication, and high rates of defects that eventually start to hamper growth.
