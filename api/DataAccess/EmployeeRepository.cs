@@ -22,7 +22,7 @@ public class EmployeeRepository : RepositoryBase<Employee>
     /// <param name="start">The starting index of companies to retrieve.</param>
     /// <param name="pageSize">The number of companies to retrieve.</param>
     /// <returns>The specified number of companies starting from the specified start index sorted by title.</returns>
-    public async virtual Task<IEnumerable<Employee>> GetByCompany(string companyId, int start, int pageSize)
+    public async virtual Task<IEnumerable<Employee>> GetByCompanyAsync(string companyId, int start, int pageSize)
     {
         return await base.GetList(start, pageSize, (e) => e.Company!.Id == companyId);
     }
@@ -32,7 +32,7 @@ public class EmployeeRepository : RepositoryBase<Employee>
     /// </summary>
     /// <param name="companyId">The company that is being deleted.</param>
     /// <returns>The result of the delete opration.</returns>
-    public virtual async Task<DeleteResult> DeleteByCompany(string companyId)
+    public virtual async Task<DeleteResult> DeleteByCompanyAsync(string companyId)
     {
         return await Collection.DeleteManyAsync<Employee>(e => e.Company!.Id == companyId);
     }

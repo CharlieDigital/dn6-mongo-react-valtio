@@ -20,7 +20,7 @@ public class CompanyRepository : RepositoryBase<Company>
     /// </summary>
     /// <param name="id">The ID of the Company to retrieve.</param>
     /// <returns>The Company with the Employees populated.</returns>
-    public async Task<Company?> GetFullEntity(string id)
+    public async Task<Company?> GetFullEntityAsync(string id)
     {
         // See: https://www.niceonecode.com/blog/64/left-join-in-mongodb-using-the-csharp-driver-and-linq
         IMongoCollection<Employee> employees =
