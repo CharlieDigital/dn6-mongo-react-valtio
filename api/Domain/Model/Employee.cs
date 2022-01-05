@@ -1,7 +1,7 @@
 namespace Api.Domain.Model;
 
 /// <summary>
-/// Models an employee.
+/// Core data model for an employee.
 /// </summary>
 public class Employee : MongoEntityBase
 {

@@ -85,12 +85,7 @@ public abstract class RepositoryBase<T> where T: IMongoEntity
 
         if (whereClause != null)
         {
-            return await query
-                .Where(whereClause)
-                .OrderBy(e => e.Label)
-                .Skip(start)
-                .Take(pageSize)
-                .ToListAsync();
+            query = query.Where(whereClause);
         }
 
         return await query

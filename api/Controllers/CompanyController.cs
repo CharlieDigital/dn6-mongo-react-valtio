@@ -25,7 +25,7 @@ public class CompanyController : ControllerBase
     public async Task<IEnumerable<Company>> GetAllCompanies(int start = 0, int pageSize = 25)
     {
         _logger.LogInformation($"Getting companies from {start} to {start + pageSize}...");
-        IEnumerable<Company> result = await _dataServices.Companies.GetList(start, pageSize);
+        var result = await _dataServices.Companies.GetList(start, pageSize);
         return result;
     }
 
@@ -39,7 +39,7 @@ public class CompanyController : ControllerBase
     public async Task<Company> AddCompany([FromBody] Company company)
     {
         _logger.LogInformation("Adding a new company...");
-        Company result = await _dataServices.Companies.AddAsync(company);
+        var result = await _dataServices.Companies.AddAsync(company);
         return result;
     }
 
@@ -52,7 +52,7 @@ public class CompanyController : ControllerBase
     public async Task<DeleteResult> DeleteCompany(string id)
     {
         _logger.LogInformation($"Deleting company with ID {id}");
-        DeleteResult result = await _dataServices.Companies.DeleteAsync(id);
+        var result = await _dataServices.Companies.DeleteAsync(id);
         await _dataServices.Employees.DeleteByCompany(id);
         return result;
     }
@@ -68,7 +68,7 @@ public class CompanyController : ControllerBase
     {
         _logger.LogInformation($"Getting company with ID: {id} ({full})");
 
-        Company? company = full
+        var company = full
             ? await _dataServices.Companies.GetFullEntity(id)
             : await _dataServices.Companies.GetAsync(id);
 

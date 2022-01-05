@@ -25,7 +25,7 @@ public class EmployeeController : ControllerBase
     public async Task<Employee> AddEmployee([FromBody] Employee employee)
     {
         _logger.LogInformation("Adding a new employee...");
-        Employee result = await _dataServices.Employees.AddAsync(employee);
+        var result = await _dataServices.Employees.AddAsync(employee);
         return result;
     }
 
@@ -37,7 +37,7 @@ public class EmployeeController : ControllerBase
     public async Task<DeleteResult> DeleteEmployee(string id)
     {
         _logger.LogInformation($"Deleting employee with ID {id}");
-        DeleteResult result = await _dataServices.Employees.DeleteAsync(id);
+        var result = await _dataServices.Employees.DeleteAsync(id);
         return result;
     }
 
@@ -50,7 +50,7 @@ public class EmployeeController : ControllerBase
     public async Task<Employee> GetEmployee(string id)
     {
         _logger.LogInformation($"Getting employee with ID: {id}");
-        Employee? employee = await _dataServices.Employees.GetAsync(id);
+        var employee = await _dataServices.Employees.GetAsync(id);
         return employee;
     }
 
@@ -64,8 +64,10 @@ public class EmployeeController : ControllerBase
     [HttpGet("/api/employee/company/{companyId}/{start:int?}/{pageSize:int?}", Name = nameof(GetByCompany))]
     public async Task<IEnumerable<Employee>> GetByCompany(string companyId, int start = 0, int pageSize = 25)
     {
+        // Use something like this to prevent over-fetching:
+        // https://docs.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-6.0&tabs=visual-studio-code#prevent-over-posting
         _logger.LogInformation($"Getting employee for company ID: {companyId}");
-        IEnumerable<Employee> employees = await _dataServices.Employees.GetByCompany(companyId, start, pageSize);
+        var employees = await _dataServices.Employees.GetByCompany(companyId, start, pageSize);
         return employees;
     }
 }

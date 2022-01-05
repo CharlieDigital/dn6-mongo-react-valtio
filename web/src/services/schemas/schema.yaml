@@ -339,7 +339,7 @@ components:
         company:
           $ref: '#/components/schemas/EntityRef'
       additionalProperties: false
-      description: Models an employee.
+      description: Core data model for an employee.
     EntityRef:
       type: object
       properties:
