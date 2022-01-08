@@ -1,4 +1,4 @@
-# .NET6 / MongoDB / React / Vite / MUI / Valtio
+# .NET6 / MongoDB / React / Vite / MUI / Valtio / Cognito
 
 This project demonstrates the usage of:
 
@@ -489,9 +489,16 @@ For local development, [you'll want to set up secrets](https://docs.microsoft.co
 
 ```
 dotnet user-secrets init
+
+# Windows use :
 dotnet user-secrets set "AwsCognitoSettings:Region" "us-east-1"
 dotnet user-secrets set "AwsCognitoSettings:UserPoolId" "us-east-1_YA......I"
 dotnet user-secrets set "AwsCognitoSettings:AppClientId" "29jb...............85riu8g"
+
+# Mac/Linux use __
+dotnet user-secrets set "AwsCognitoSettings__Region" "us-east-1"
+dotnet user-secrets set "AwsCognitoSettings__UserPoolId" "us-east-1_YA......I"
+dotnet user-secrets set "AwsCognitoSettings__AppClientId" "29jb...............85riu8g"
 ```
 
 The front-end build requires setting five environment variables (consumed in `main.tsx`) to support OAuth:
@@ -504,9 +511,13 @@ VITE_AWS_IDENTITY_POOL_ID   # us-east-1:d9d3e57a-....-....-....-....9c3c425c
 VITE_AWS_OAUTH_DOMAIN       # ......................auth.us-east-1.amazoncognito.com
 ``
 
-Alternatively, use the normal import from Amplify `aws-exports.js`.
+Alternatively, use the normal import from Amplify `aws-exports.js` (AppSync).
 
 Either set them at the command line, in your shell, or OS environment variables.
+
+It is possible to set up multiple JWT handlers so that you can have one endpoint that is accepting the Cognito token and then returning a locally issued token.
+
+See the documentation for [how to incorporate multiple authentication schemes](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-6.0).
 
 ## Operationalizing
 

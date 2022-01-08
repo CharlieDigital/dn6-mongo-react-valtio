@@ -58,8 +58,6 @@ public class AwsCognitoJwtProvider : IConfigureNamedOptions<JwtBearerOptions>
         string issuer = $"https://cognito-idp.{_cognito.Region}.amazonaws.com/{_cognito.UserPoolId}";
         string jwtKeySetUrl = $"{issuer}/.well-known/jwks.json";
 
-        Log.Warning("DOING KEY CONVERT");
-
         return new TokenValidationParameters
         {
             IssuerSigningKeyResolver = (s, securityToken, identifier, parameters) =>
