@@ -19,6 +19,10 @@ Use this as a starting point for your own code.
 
 For C# development in VS Code, grab the OmniSharp extension.  Grab [at least 1.24.0-beta1](https://github.com/OmniSharp/omnisharp-vscode/releases/tag/v1.24.0-beta1) and install manually as there is a defect in earlier versions which causes an issue with .NET 6 projects.
 
+## Variants
+
+- [With AWS Cognito authentication](https://github.com/CharlieDigital/dn6-mongo-react-valtio/tree/cognito-auth)
+
 ## Rationale
 
 The key objective of this stack is to fulfill the following:
