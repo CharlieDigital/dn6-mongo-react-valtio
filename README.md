@@ -41,6 +41,10 @@ While this is unavoidable for building modern web front-ends, it poses a risk on
 
 > I like Node.js because as my hero [Ryan Dahl says it's like coloring with crayons and playing with Duplo blocks](https://news.ycombinator.com/item?id=4310723), but as it turns out it's less like playing with Duplo blocks and more like playing with Slinkies.  Slinkies that get tangled together and impossible to separate.
 
+This "tangled Slinky" nature is the most observable by how far behind most teams end up with respect to their dependency versions and even their Node runtime versions.  Updating the runtime version or even a version of a key library becomes a costly effort because of the ramifications across the codebase and the refactoring and fixes necessary due to the tangled nature of the ecosystem.
+
+When a team starts a project, this is rarely a problem.  But as vulnerabilities get patched, as dependencies increase, and as the Node versions increment, this situation tends to become increasingly untenable.
+
 ### Performance
 
 Multiple benchmarks show that .NET Core is now in the same performance tier as Go and Rust in real-world workloads while still being highly accessible and easy to hire for.
