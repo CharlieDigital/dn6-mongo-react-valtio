@@ -5,7 +5,7 @@
 import type { EntityRef } from './EntityRef';
 
 /**
- * Models an employee.
+ * Core data model for an employee.
  */
 export type Employee = {
     /**

@@ -471,7 +471,7 @@ The [structured log output](https://github.com/serilog/serilog/wiki/Structured-D
 
 To add real time interactions to this, the easiest path is to incorporate [SignalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/hubs?view=aspnetcore-6.0).
 
-In production, you're better off using Azure SignalR as this provides a low-cost, highly scalable web-sockets as a service capability.
+In production, you're better off using Azure SignalR as this provides a low-cost, highly scalable web-sockets as a service capability.  Keep in mind that WebSocket connections ***keep the Google Cloud Run instance active and billing***.  So ideally, the WebSockets are externalized to keep your cost of compute low.
 
 Use the local hub for development and switch to Azure SignalR in production.
 
@@ -531,6 +531,44 @@ Both AWS and Azure offer similar capabilities:
 - [Azure Storage Static Websites](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website) - very easy to implement, has great integration with Functions, and also has CDN integration
 
 One note with the Google Cloud Storage Buckets is that there is a default 3600 second cache for all artifacts uploaded into Google Cloud Storage.  This can be problematic because even if you manually set to the `Cache-Control` to `no-store`, every publish will overwrite the metadata and set it back to the default 3600.  When this occurs, your front-end does not update and there is no mechanism to force it to do so.  The workaround is to have a proxy or CDN in front of the app that will generate a random URL token to force a fresh read and then cache at the proxy or CDN instead of directly in Google Storage (neither AWS nor Azure behave the same way; both require explicit activation of caching or usage of the CDN).
+
+### Pulumi Infrastructure
+
+As an alternative to manually setting up the infrastructure, you can use Pulumi.
+
+[Pulumi is a toolset for deploying infrastructure as code (IaC)](https://www.pulumi.com).  There is no equivalent of the AWS CDK for Google Cloud so if you use Google Cloud, you'll need to use Terraform or a solution like Pulumi which sits on top of Terraform.
+
+It provides support for deploying IaC using multiple programming languages including:
+
+- TypeScript
+- JavaScript
+- Python
+- Go
+- C#
+
+Once you have your Google Cloud account set up and `gcloud` installed on your local, [you'll need to prepare your environment to run Pulumi](https://www.pulumi.com/docs/get-started/gcp/begin/) by installing the Pulumi packages.
+
+The Pulumi installation path
+
+```
+gcloud projects create dn6-api-mongo-pulumi
+gcloud projects list
+gcloud config set project dn6-api-mongo-pulumi
+gcloud auth application-default login
+```
+
+Run the following commands to deploy the infrastructure into your Google Cloud:
+
+```
+cd deploy
+pulumi up
+```
+
+Run the following commands to tear down the infrastructure:
+
+```
+pulumi destroy
+```
 
 ## Resources
 

@@ -67,7 +67,7 @@ public class EmployeeController : ControllerBase
         // Use something like this to prevent over-fetching:
         // https://docs.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-6.0&tabs=visual-studio-code#prevent-over-posting
         _logger.LogInformation($"Getting employee for company ID: {companyId}");
-        var employees = await _dataServices.Employees.GetByCompany(companyId, start, pageSize);
+        var employees = await _dataServices.Employees.GetByCompanyAsync(companyId, start, pageSize);
         return employees;
     }
 }

@@ -53,7 +53,7 @@ public class CompanyController : ControllerBase
     {
         _logger.LogInformation($"Deleting company with ID {id}");
         var result = await _dataServices.Companies.DeleteAsync(id);
-        await _dataServices.Employees.DeleteByCompany(id);
+        await _dataServices.Employees.DeleteByCompanyAsync(id);
         return result;
     }
 
@@ -69,7 +69,7 @@ public class CompanyController : ControllerBase
         _logger.LogInformation($"Getting company with ID: {id} ({full})");
 
         var company = full
-            ? await _dataServices.Companies.GetFullEntity(id)
+            ? await _dataServices.Companies.GetFullEntityAsync(id)
             : await _dataServices.Companies.GetAsync(id);
 
         return company;

@@ -13,7 +13,7 @@ export class AdminService {
      */
     public static resetEnv(): CancelablePromise<any> {
         return __request({
-            method: 'GET',
+            method: 'DELETE',
             path: `/api/admin/reset`,
         });
     }
