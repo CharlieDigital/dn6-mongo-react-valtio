@@ -479,6 +479,35 @@ In production, you're better off using Azure SignalR as this provides a low-cost
 
 Use the local hub for development and switch to Azure SignalR in production.
 
+## Authentication with Cognito and Managing Secrets
+
+This branch demonstrates how to perform authentication with AWS Cognito.
+
+It assumes that you already have Cognito set up.
+
+For local development, [you'll want to set up secrets](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0) for .NET:
+
+```
+dotnet user-secrets init
+dotnet user-secrets set "AwsCognitoSettings:Region" "us-east-1"
+dotnet user-secrets set "AwsCognitoSettings:UserPoolId" "us-east-1_YA......I"
+dotnet user-secrets set "AwsCognitoSettings:AppClientId" "29jb...............85riu8g"
+```
+
+The front-end build requires setting five environment variables (consumed in `main.tsx`) to support OAuth:
+
+```
+VITE_AWS_USER_POOL_ID       # us-east-1_YA......I
+VITE_AWS_REGION             # us-east-1
+VITE_AWS_APP_CLIENT_ID      # 29jb...............85riu8g
+VITE_AWS_IDENTITY_POOL_ID   # us-east-1:d9d3e57a-....-....-....-....9c3c425c
+VITE_AWS_OAUTH_DOMAIN       # ......................auth.us-east-1.amazoncognito.com
+``
+
+Alternatively, use the normal import from Amplify `aws-exports.js`.
+
+Either set them at the command line, in your shell, or OS environment variables.
+
 ## Operationalizing
 
 The solution can be operationalized into Google Cloud Run (back-end) and Google Storage Buckets (front-end).

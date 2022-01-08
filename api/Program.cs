@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // [CC] Add custom logging
@@ -25,6 +27,21 @@ builder.Services.AddSingleton<MongoDbContext>();
 
 // [CC] Initialize the data services.
 builder.Services.AddScoped<IDataServices, DataServices>();
+
+// [CC] Add Authentication
+builder.Services.Configure<AwsCognitoSettings>(
+    builder.Configuration.GetSection(nameof(AwsCognitoSettings))
+);
+
+// [CC] See: https://stackoverflow.com/a/46963194
+builder.Services
+    .AddAuthentication(config => {
+        config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, configureOptions: null);
+
+builder.Services.AddSingleton<IConfigureOptions<JwtBearerOptions>, AwsCognitoJwtProvider>();
 
 // Add services to the container.
 
@@ -69,6 +86,8 @@ app.UseCors(options =>
 
 // [CC] Turn off for development
 // app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -4,6 +4,7 @@ namespace Api.Controllers;
 /// API Controller for administration functions.
 /// </summary>
 [ApiController]
+[Authorize]
 public class AdminController : ControllerBase
 {
     private readonly IDataServices _dataServices;

@@ -7,6 +7,8 @@ class AppState
 {
     public companies: Company[] = [];
 
+    public authenticated: boolean = false;
+
     /**
      * Add a random company via API call and then adds the instance into the array.
      */

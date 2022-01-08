@@ -4,6 +4,7 @@ namespace Api.Controllers;
 /// API Contoller class for Employee entities.
 /// </summary>
 [ApiController]
+[Authorize]
 public class EmployeeController : ControllerBase
 {
     private readonly IDataServices _dataServices;
