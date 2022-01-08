@@ -1,0 +1,3 @@
+name: dn6-api-mongo
+runtime: nodejs
+description: Deploys .NET 6 MongoDB Web API app.

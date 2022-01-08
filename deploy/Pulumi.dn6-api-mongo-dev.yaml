@@ -1,0 +1,2 @@
+config:
+  gcp:project: dotnet6-forecast
