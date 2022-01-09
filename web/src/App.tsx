@@ -6,7 +6,6 @@ import MainGrid from "./components/MainGrid";
 import { useEffect } from "react";
 import { appState } from "./store/AppState";
 import { Auth } from "aws-amplify";
-import { OpenAPI } from "./services";
 import { CognitoUser } from "@aws-amplify/auth";
 
 // The main app UI.

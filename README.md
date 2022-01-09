@@ -19,6 +19,14 @@ Use this as a starting point for your own code.
 
 For C# development in VS Code, grab the OmniSharp extension.  Grab [at least 1.24.0-beta1](https://github.com/OmniSharp/omnisharp-vscode/releases/tag/v1.24.0-beta1) and install manually as there is a defect in earlier versions which causes an issue with .NET 6 projects.
 
+## Variant
+
+This variant accepts the Cognito authentication token and includes a hook to augment tokens at runtime.
+
+This allows the application to provide local claims to the user.
+
+See the notes below on Cognito authentication.
+
 ## Rationale
 
 The key objective of this stack is to fulfill the following:
@@ -518,6 +526,8 @@ Either set them at the command line, in your shell, or OS environment variables.
 It is possible to set up multiple JWT handlers so that you can have one endpoint that is accepting the Cognito token and then returning a locally issued token.
 
 See the documentation for [how to incorporate multiple authentication schemes](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-6.0).
+
+Using a combination of [Policy-based Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) and [Claims-based Authorization](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/claims?view=aspnetcore-6.0), it is possible to acheive fine grained control over the API call (e.g. if the user tries to update a record belonging to a company, see if the user has a claim mapped to the company).
 
 ## Operationalizing
 

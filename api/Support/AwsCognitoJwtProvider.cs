@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Newtonsoft.Json;
 
@@ -37,6 +38,12 @@ public class AwsCognitoJwtProvider : IConfigureNamedOptions<JwtBearerOptions>
         if (name == JwtBearerDefaults.AuthenticationScheme)
         {
             options.TokenValidationParameters = CreateTokenValidationParameters();
+
+            // This provides the hook to perform custom claims injection.
+            options.Events = new JwtBearerEvents
+            {
+                OnTokenValidated = HandleTokenValidated
+            };
         }
     }
 
@@ -77,5 +84,25 @@ public class AwsCognitoJwtProvider : IConfigureNamedOptions<JwtBearerOptions>
             ValidateLifetime = true,
             ValidAudience = _cognito.AppClientId
         };
+    }
+
+    /// <summary>
+    /// This hook allows the application to perform custom claims injection.
+    /// </summary>
+    /// <param name="context">The token validated context which allows additional claims to be added.</param>
+    /// <returns>A Task instance.</returns>
+    private async Task HandleTokenValidated(TokenValidatedContext context)
+    {
+        // TODO: Do database access or other lookup here.
+
+        // TODO: Add more claims.
+        var claims = new List<Claim>
+        {
+            new Claim("my.favorite.greeting", "Hej, hej!")
+        };
+
+        var localIdentity = new ClaimsIdentity(claims);
+
+        context.Principal.AddIdentity(localIdentity);
     }
 }
