@@ -517,7 +517,7 @@ VITE_AWS_REGION             # us-east-1
 VITE_AWS_APP_CLIENT_ID      # 29jb...............85riu8g
 VITE_AWS_IDENTITY_POOL_ID   # us-east-1:d9d3e57a-....-....-....-....9c3c425c
 VITE_AWS_OAUTH_DOMAIN       # ......................auth.us-east-1.amazoncognito.com
-``
+```
 
 Alternatively, use the normal import from Amplify `aws-exports.js` (AppSync).
 
