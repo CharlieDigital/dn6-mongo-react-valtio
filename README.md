@@ -57,6 +57,7 @@ Multiple benchmarks show that .NET Core is now in the same performance tier as G
 - [TechEmpower Round 20 Benchmarks with ASP.NET Core beating Fiber (Go) and absolutely stomping Node.js and Nest.js](https://www.techempower.com/benchmarks/#section=data-r20&hw=ph&test=composite)
 - [Alex Yakunin's article exploring Go vs .NET garbage collection and memory allocation throughput](https://medium.com/servicetitan-engineering/go-vs-c-part-3-compiler-runtime-type-system-modules-and-everything-else-faa423dddb34)
 - [Aleksandr Filichkin's benchmarks comparing AWS Lambda performance of various languages](https://filia-aleks.medium.com/aws-lambda-battle-x86-vs-arm-graviton2-perfromance-3581aaef75d9)
+- [LesnyRumcajs gRPC benchmarks show .NET at the top of 2 core performance and near the top in single and 3 core performance](https://github.com/LesnyRumcajs/grpc_bench/wiki/2022-01-11-bench-results)
 
 [.NET 6 brings additional performance improvements](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-6/) which will continue to push the boundaries.
 
