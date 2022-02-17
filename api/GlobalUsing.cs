@@ -8,6 +8,8 @@ global using MongoDB.Bson.Serialization.Attributes;
 global using MongoDB.Bson.Serialization.IdGenerators;
 
 global using Serilog;
+global using Serilog.Events;
+global using Sentry.Extensibility;
 
 global using Api.Domain.Core;
 global using Api.Domain.Model;
