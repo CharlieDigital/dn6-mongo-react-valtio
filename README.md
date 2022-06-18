@@ -491,7 +491,7 @@ Use the local hub for development and switch to Azure SignalR in production.
 
 To add Azure SignalR, you can sign up for a free tier SignalR service in Azure.
 
-Be sure to use the **Default** runtime option instead of the **Serverless** option.
+> 💡 Be sure to use the **Default** runtime option instead of the **Serverless** option.
 
 We need two packages:
 
@@ -504,7 +504,7 @@ We'll also need to get the connection string from Azure and set the connection s
 
 ```
 dotnet user-secrets init
-dotnet user-secrets set "SignalRConnection" "Endpoint=https://****** */.service.signalr.net;AccessKey=PPes*************ZXiuhyjvzo=;Version=1.0;"
+dotnet user-secrets set "AzureSettings:SignalRConnection" "Endpoint=https://****** */.service.signalr.net;AccessKey=PPes*************ZXiuhyjvzo=;Version=1.0;"
 ```
 
 ## Authentication with Cognito and Managing Secrets
