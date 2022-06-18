@@ -273,6 +273,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Employee'
+  '/api/notifications/echo/{message}':
+    get:
+      tags:
+        - Notifcations
+      summary: Gets a Employee by ID
+      operationId: Echo
+      parameters:
+        - name: message
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
 components:
   schemas:
     Company:

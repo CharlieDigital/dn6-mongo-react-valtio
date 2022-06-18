@@ -13,3 +13,4 @@ export type { EntityRef } from './models/EntityRef';
 export { AdminService } from './services/AdminService';
 export { CompanyService } from './services/CompanyService';
 export { EmployeeService } from './services/EmployeeService';
+export { NotifcationsService } from './services/NotifcationsService';

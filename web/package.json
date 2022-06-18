@@ -10,6 +10,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@microsoft/signalr": "^6.0.6",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.6",
     "aws-amplify": "^4.3.12",

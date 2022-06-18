@@ -1,4 +1,4 @@
-# .NET6 / MongoDB / React / Vite / MUI / Valtio / Cognito
+# .NET6 / MongoDB / React / Vite / MUI / Valtio / Cognito / SignalR
 
 This project demonstrates the usage of:
 
@@ -26,6 +26,8 @@ This variant accepts the Cognito authentication token and includes a hook to aug
 This allows the application to provide local claims to the user.
 
 See the notes below on Cognito authentication.
+
+This variant also adds support for Azure SignalR.
 
 ## Rationale
 
@@ -486,6 +488,24 @@ To add real time interactions to this, the easiest path is to incorporate [Signa
 In production, you're better off using Azure SignalR as this provides a low-cost, highly scalable web-sockets as a service capability.  Keep in mind that WebSocket connections ***keep the Google Cloud Run instance active and billing***.  So ideally, the WebSockets are externalized to keep your cost of compute low.
 
 Use the local hub for development and switch to Azure SignalR in production.
+
+To add Azure SignalR, you can sign up for a free tier SignalR service in Azure.
+
+Be sure to use the **Default** runtime option instead of the **Serverless** option.
+
+We need two packages:
+
+```
+dotnet add package Microsoft.AspNetCore.SignalR
+dotnet add package Microsoft.Azure.SignalR
+```
+
+We'll also need to get the connection string from Azure and set the connection string as a user secret:
+
+```
+dotnet user-secrets init
+dotnet user-secrets set "SignalRConnection" "Endpoint=https://****** */.service.signalr.net;AccessKey=PPes*************ZXiuhyjvzo=;Version=1.0;"
+```
 
 ## Authentication with Cognito and Managing Secrets
 

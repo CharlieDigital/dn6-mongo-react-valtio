@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Azure.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,29 @@ builder.Services
 
 builder.Services.AddSingleton<IConfigureOptions<JwtBearerOptions>, AwsCognitoJwtProvider>();
 
+// Set up Azure SignalR
+// https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-quickstart-dotnet-core
+builder.Services.Configure<AzureSettings>(
+    builder.Configuration.GetSection(nameof(AzureSettings))
+);
+
+var azureSettings = builder.Configuration
+    .GetSection(nameof(AzureSettings))
+    .Get<AzureSettings>();
+
+if (azureSettings.IsSignalRConfigured())
+{
+    builder.Services
+        .AddSignalR()
+        .AddAzureSignalR(options =>
+        {
+            options.Endpoints = new[]
+            {
+            new ServiceEndpoint(azureSettings.SignalRConnection)
+            };
+        });
+}
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -57,6 +81,8 @@ builder.Services.AddSwaggerGen(config =>
 });
 
 var app = builder.Build();
+
+ app.UseRouting();
 
 // [CC] In the container environment, we want to run this on 8080 for GCR
 // This means that we will need to add the environment variable in the
@@ -79,9 +105,10 @@ app.UseSwaggerUI();
 // [CC] We need this to call our API from the static front-end
 app.UseCors(options =>
 {
-    options.AllowAnyHeader();
-    options.AllowAnyMethod();
-    options.AllowAnyOrigin();
+    options.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials(); // This is required to pass credentials.
 });
 
 // [CC] Turn off for development
@@ -92,5 +119,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Set up the SignalR hub.  This has to be AFTER the controllers are mapped.
+app.UseEndpoints(e =>
+{
+    if (azureSettings.IsSignalRConfigured())
+    {
+        // See: https://docs.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-6.0&tabs=dotnet#advanced-http-configuration-options
+        e.MapHub<NotificationHub>("/notifications");
+    }
+});
 
 app.Run();

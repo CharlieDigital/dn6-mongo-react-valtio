@@ -1,3 +1,37 @@
 {
-    "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj"
-}
+    "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.tabSize": 2
+    },
+    "[xml]": {
+      "editor.tabSize": 2
+    },
+    "[csharp]": {
+      "editor.tabSize": 4
+    },
+    "[aspnetcorerazor]": {
+      "editor.tabSize": 4
+    },
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true
+    },
+    "search.exclude": {
+      "**/**/node_modules": true,
+      "**/**/obj": true,
+      "**/**/bin": true,
+      "**/.idea": true
+    }
+  }
