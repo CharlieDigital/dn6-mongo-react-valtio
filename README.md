@@ -22,6 +22,7 @@ For C# development in VS Code, grab the OmniSharp extension.  Grab [at least 1.2
 ## Variants
 
 - [With AWS Cognito authentication](https://github.com/CharlieDigital/dn6-mongo-react-valtio/tree/cognito-auth)
+- [With AWS Cognito and Azure SignalR](https://github.com/CharlieDigital/dn6-mongo-react-valtio/tree/azure-signalr)
 
 ## Rationale
 
