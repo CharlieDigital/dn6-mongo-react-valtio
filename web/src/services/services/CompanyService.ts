@@ -14,14 +14,14 @@ export class CompanyService {
      * @throws ApiError
      */
     public static getAllCompanies({
-start,
-pageSize = 25,
-}: {
-/** The starting index of companies to retrieve.  Optional; 0 if not specified. **/
-start: number,
-/** The number of entries to retrieve.  Optional; 25 if not specified. **/
-pageSize?: number,
-}): CancelablePromise<Array<Company>> {
+        start,
+        pageSize = 25,
+    }: {
+        /** The starting index of companies to retrieve.  Optional; 0 if not specified. **/
+        start: number,
+        /** The number of entries to retrieve.  Optional; 25 if not specified. **/
+        pageSize?: number,
+    }): CancelablePromise<Array<Company>> {
         return __request({
             method: 'GET',
             path: `/api/company/list/${start}/${pageSize}`,
@@ -30,17 +30,17 @@ pageSize?: number,
 
     /**
      * Adds a new company to the database.  Set the ID to the empty string ""
- * and a new ID will be assigned automatically.  The returned entity will
- * have the new ID.
+     * and a new ID will be assigned automatically.  The returned entity will
+     * have the new ID.
      * @returns Company Success
      * @throws ApiError
      */
     public static addCompany({
-requestBody,
-}: {
-/** The company instance to add. **/
-requestBody?: Company,
-}): CancelablePromise<Company> {
+        requestBody,
+    }: {
+        /** The company instance to add. **/
+        requestBody?: Company,
+    }): CancelablePromise<Company> {
         return __request({
             method: 'POST',
             path: `/api/company/add`,
@@ -51,15 +51,15 @@ requestBody?: Company,
 
     /**
      * Deletes a Company given an ID.  Deletes all Employees that reference the
- * Company as well.
+     * Company as well.
      * @returns DeleteResult Success
      * @throws ApiError
      */
     public static deleteCompany({
-id,
-}: {
-id: string,
-}): CancelablePromise<DeleteResult> {
+        id,
+    }: {
+        id: string,
+    }): CancelablePromise<DeleteResult> {
         return __request({
             method: 'DELETE',
             path: `/api/company/delete/${id}`,
@@ -72,14 +72,14 @@ id: string,
      * @throws ApiError
      */
     public static getCompany({
-id,
-full = false,
-}: {
-/** The ID of the company to retrieve. **/
-id: string,
-/** When specified, returns the rich object **/
-full?: boolean,
-}): CancelablePromise<Company> {
+        id,
+        full = false,
+    }: {
+        /** The ID of the company to retrieve. **/
+        id: string,
+        /** When specified, returns the rich object **/
+        full?: boolean,
+    }): CancelablePromise<Company> {
         return __request({
             method: 'GET',
             path: `/api/company/${id}/${full}`,

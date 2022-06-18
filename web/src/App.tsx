@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { appState } from "./store/AppState";
 import { Auth } from "aws-amplify";
 import { CognitoUser } from "@aws-amplify/auth";
+import { OpenAPI } from "./services";
 
 // The main app UI.
 function App()
