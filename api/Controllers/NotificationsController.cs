@@ -24,15 +24,13 @@ public class NotifcationsController : ControllerBase
     }
 
     /// <summary>
-    /// Gets a Employee by ID
+    /// Echos a message to all connected clients.
     /// </summary>
-    /// <param name="id">The ID of the Employee to retrieve.</param>
-    /// <returns>The Employee instance that matches the ID.</returns>
+    /// <param name="message">The message to send to all connected clients..</param>
     [HttpGet("/api/notifications/echo/{message}", Name = nameof(Echo))]
     public async Task Echo(string message)
     {
         _logger.LogInformation($"Echoing: {message}");
-        var employee = _hub.Clients.All.Send(message);
-        await Task.CompletedTask;
+        await _hub.Clients.All.Send(message);
     }
 }

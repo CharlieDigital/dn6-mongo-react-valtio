@@ -15,11 +15,6 @@ builder.Host.UseSerilog((context, config) =>
     // See the docs here: https://github.com/serilog/serilog/wiki
 });
 
-// [CC] Add SignalR; see: https://docs.microsoft.com/en-us/aspnet/core/signalr/hubs?view=aspnetcore-6.0
-// In production, consider using Azure SignalR services instead so that you don't have to manage
-// this infrastructure.
-// builder.Services.AddSignalR();
-
 // [CC] Initialize Mongo: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio-code
 builder.Services.Configure<MongoDbConnectionSettings>(
     builder.Configuration.GetSection(nameof(MongoDbConnectionSettings))
@@ -44,7 +39,7 @@ builder.Services
 
 builder.Services.AddSingleton<IConfigureOptions<JwtBearerOptions>, AwsCognitoJwtProvider>();
 
-// Set up Azure SignalR
+// [CC] Set up Azure SignalR
 // https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-quickstart-dotnet-core
 builder.Services.Configure<AzureSettings>(
     builder.Configuration.GetSection(nameof(AzureSettings))
@@ -91,13 +86,6 @@ if(app.Environment.IsEnvironment("container"))
 {
     app.Urls.Add("http://0.0.0.0:8080"); // Supoorts Google Cloud Run.
 }
-
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
 
 app.UseSwagger();
 app.UseSwaggerUI();
