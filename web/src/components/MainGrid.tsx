@@ -1,9 +1,9 @@
 import "../App.css";
-import { Button, Card, CardContent, Grid, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Card, CardContent, Grid, Input, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import Logout from "@mui/icons-material/Logout";
 import { useSnapshot } from "valtio";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { appState } from "../store/AppState";
 import CompanyRow from "./CompanyRow";
 import { Auth } from "aws-amplify";
@@ -14,6 +14,9 @@ import { useNavigate } from "react-router-dom";
  */
 function MainGrid() {
   const navigate = useNavigate();
+
+  var [group, setGroup] = useState("");
+  var [message, setMessage] = useState("");
 
   // Add a company to the global state.
   async function addCompany() {
@@ -30,6 +33,19 @@ function MainGrid() {
   // Broadcast a message.
   async function broadcast() {
     await appState.broadcast();
+  }
+
+  // Joins a user to a group.
+  async function joinGroup() {
+    await appState.joinGroup(group);
+  }
+
+  // Sends a message to the specified group.
+  async function messageGroup() {
+    await appState.notifyGroup(
+      group,
+      message
+    );
   }
 
   const { companies } = useSnapshot(appState);
@@ -82,6 +98,32 @@ function MainGrid() {
               onClick={async () => await broadcast()}>
               Broadcast
             </Button>
+          </CardContent>
+          <CardContent>
+            <p>Click the button to join a group</p>
+            <div>
+              <Input onChange={(e) => setGroup(e.target.value)}/>
+              <Button
+                sx={{ ml: 4 }}
+                variant="outlined"
+                size="small"
+                startIcon={<Add />}
+                onClick={async () => await joinGroup()}>
+                Join
+              </Button>
+            </div>
+            <p>Click the button to send a message only to the group.</p>
+            <div>
+              <Input onChange={(e) => setMessage(e.target.value)}/>
+              <Button
+                sx={{ ml: 4 }}
+                variant="outlined"
+                size="small"
+                startIcon={<Add />}
+                onClick={async () => await messageGroup()}>
+                Send
+              </Button>
+            </div>
           </CardContent>
           <CardContent>
             Showing {companies.length} companies (max 10; delete or reset to restart).  Total comp: <strong>${appState.totalCompensation}</strong>

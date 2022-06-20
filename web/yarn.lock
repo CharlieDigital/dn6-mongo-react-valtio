@@ -3440,6 +3440,18 @@ proxy-compare@2.0.2:
   resolved "https://registry.yarnpkg.com/proxy-compare/-/proxy-compare-2.0.2.tgz#343e624d0ec399dfbe575f1d365d4fa042c9fc69"
   integrity sha512-3qUXJBariEj3eO90M3Rgqq3+/P5Efl0t/dl9g/1uVzIQmO3M+ql4hvNH3mYdu8H+1zcKv07YvL55tsY74jmH1A==
 
+proxy-compare@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/proxy-compare/-/proxy-compare-2.2.0.tgz#2357330407241b091501644d08a446a4a28e0e15"
+  integrity sha512-hEtMJevUmOByZCTw1NRUVaWWHCGJLO0ogizpey8yX6zMPolDe8YVa+PHgMOTiZuyUkFj+hMKs/1UaM0+ZkuvgA==
+
+proxy-memoize@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-memoize/-/proxy-memoize-1.1.0.tgz#bfe8a82f59a1bb606ad7b14f16a5ecb661f231d2"
+  integrity sha512-Qfo/Bkeb9zIIJ8w5e9tzc284hl84Jc4EwZLaAPU/GfzOiMYFz6Mf8R/IPEYuo+q6672IRPscNnjksnPyoSwlZA==
+  dependencies:
+    proxy-compare "2.2.0"
+
 psl@^1.1.33:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/psl/-/psl-1.8.0.tgz#9326f8bcfb013adcc005fdff056acce020e51c24"

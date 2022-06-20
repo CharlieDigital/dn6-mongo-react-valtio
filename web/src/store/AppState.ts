@@ -1,4 +1,6 @@
+import memoize from "proxy-memoize";
 import { proxy } from "valtio";
+import { proxyWithComputed } from "valtio/utils";
 import {
   CompanyService,
   Employee,
@@ -19,7 +21,30 @@ class AppState {
    */
   public async broadcast() {
     var message = "Howdy";
-    NotifcationsService.echo({ message });
+    await NotifcationsService.echo({ message });
+  }
+
+  /**
+   * Joins the user to a group.
+   * @param groupName The name of the group to join the user to.
+   */
+  public async joinGroup(groupName: string) {
+    await NotifcationsService.joinGroup({
+      connectionId: signalRService.connectionId,
+      group: groupName
+    });
+  }
+
+  /**
+   * Sends a message to the specified group.
+   * @param groupName The name of the group to target the message for.
+   * @param message The message to send to the group.
+   */
+  public async notifyGroup(groupName: string, message: string) {
+    await NotifcationsService.notifyGroup({
+      group: groupName,
+      message
+    });
   }
 
   /**
@@ -122,23 +147,23 @@ class AppState {
       .find((c) => c.id === company.id)
       ?.employees?.splice(0, 0, ...response);
   }
-
-  /**
-   * Computed getter which returns the total compensation of all employees.
-   */
-  public get totalCompensation(): Number {
-    let total = 0;
-
-    appState.companies.forEach((c) => {
-      c.employees?.forEach((e) => {
-        total += e.salary || 0;
-      });
-    });
-
-    console.log("Calculating total compensation...");
-
-    return total;
-  }
 }
 
-export const appState = proxy(new AppState());
+export const appState = proxyWithComputed(new AppState(), {
+  // Memoized to prevent over-render when the UI changes state.
+  totalCompensation: {
+    get: memoize(snap => {
+      let total = 0;
+
+      console.log("Calculating total compensation...");
+
+      snap.companies.forEach((c) => {
+        c.employees?.forEach((e) => {
+          total += e.salary || 0;
+        });
+      });
+
+      return total;
+     })
+  }
+});

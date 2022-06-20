@@ -5,6 +5,7 @@ import * as SignalR from "@microsoft/signalr";
  */
 class SignalRService {
   private _connection: SignalR.HubConnection;
+  public connectionId: string;
 
   /**
    * Starts the connection to the SignalR service.  This is invoked from App.tsx after the authentication has finished
@@ -27,7 +28,11 @@ class SignalRService {
       console.log(`Received: ${msg}`);
     });
 
-    this._connection.start();
+    await this._connection.start();
+
+    // This ID is needed when joining groups.
+    console.log(`Connection ID: ${this._connection.connectionId}`);
+    this.connectionId = this._connection.connectionId ?? "";
   }
 }
 

@@ -277,11 +277,56 @@ paths:
     get:
       tags:
         - Notifcations
-      summary: Gets a Employee by ID
+      summary: Echos a message to all connected clients.
       operationId: Echo
       parameters:
         - name: message
           in: path
+          description: The message to send to all connected clients..
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  '/api/notifications/join/{connectionId}/{group}':
+    get:
+      tags:
+        - Notifcations
+      summary: "Joins the specified connection ID to the group.  The group name is arbitrary and could represent\r\nany scope; it can be an ID, a location, etc."
+      operationId: JoinGroup
+      parameters:
+        - name: connectionId
+          in: path
+          description: The ID of the connection to join to the group.
+          required: true
+          schema:
+            type: string
+        - name: group
+          in: path
+          description: The name of the group to join the connection to.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  '/api/notifications/notify/{group}/{message}':
+    get:
+      tags:
+        - Notifcations
+      summary: Notifies the taret group with a message.
+      operationId: NotifyGroup
+      parameters:
+        - name: group
+          in: path
+          description: The name of the group to send the message to.
+          required: true
+          schema:
+            type: string
+        - name: message
+          in: path
+          description: The message to broadcast to the group.
           required: true
           schema:
             type: string
