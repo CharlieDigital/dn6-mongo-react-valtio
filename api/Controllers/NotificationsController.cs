@@ -10,14 +10,14 @@ namespace Api.Controllers;
 public class NotifcationsController : ControllerBase
 {
     public readonly IHubContext<NotificationHub, INotificationHub> _hub;
-    private readonly ILogger<EmployeeController> _logger;
+    private readonly ILogger<NotifcationsController> _logger;
 
     /// <summary>
     /// Injection constructor.
     /// </summary>
     public NotifcationsController(
         IHubContext<NotificationHub, INotificationHub> hub,
-        ILogger<EmployeeController> logger)
+        ILogger<NotifcationsController> logger)
     {
         _hub = hub;
         _logger = logger;
